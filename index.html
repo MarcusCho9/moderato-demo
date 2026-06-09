@@ -392,6 +392,127 @@ button{font-family:inherit}
   .marking-layout,.cv-body,.builder-layout{grid-template-columns:1fr}
   .board{grid-template-columns:1fr}
 }
+
+/* ════ DEMO TIPS & MOBILE CHROME ════ */
+#demo-tip{position:fixed;right:18px;bottom:18px;width:308px;max-width:calc(100vw - 32px);background:var(--navy);color:#fff;border-radius:14px;box-shadow:var(--shadowXL);z-index:160;transform:translateY(18px);opacity:0;pointer-events:none;transition:all .32s cubic-bezier(.2,.9,.3,1.1)}
+#demo-tip.show{transform:translateY(0);opacity:1;pointer-events:auto}
+.dt-head{display:flex;align-items:center;justify-content:space-between;padding:11px 14px 0;font-size:11.5px;font-weight:700;color:#9CC8EE;letter-spacing:.3px}
+.dt-x{cursor:pointer;font-size:19px;color:rgba(255,255,255,.45);line-height:1;padding:0 3px}
+.dt-x:hover{color:#fff}
+.dt-body{padding:7px 14px 13px;font-size:12.5px;line-height:1.62;color:rgba(255,255,255,.86)}
+#tips-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--borderM);background:var(--surface);color:var(--blue);font-weight:800;font-size:15px;cursor:pointer;flex-shrink:0;transition:all .14s}
+#tips-btn:hover{border-color:var(--blue);background:var(--blueL)}
+#hamb{display:none;width:38px;height:38px;border-radius:9px;border:1px solid var(--border);background:var(--surface);color:var(--navy);font-size:17px;cursor:pointer;flex-shrink:0;align-items:center;justify-content:center}
+#scrim{display:none;position:fixed;inset:0;background:rgba(10,18,38,.5);z-index:25}
+#scrim.show{display:block}
+:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+.cta-short{display:none}
+
+/* ════ WELCOME MODAL ════ */
+.welcome-steps{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:15px}
+.w-step{background:var(--blueXL);border:1px solid var(--blueM);border-radius:9px;padding:10px 12px;font-size:12px;color:var(--textM);line-height:1.5;display:flex;gap:9px;align-items:flex-start}
+.w-n{width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+
+/* ════ TASK DETAIL EXTRAS ════ */
+.td-extras{display:grid;grid-template-columns:1.2fr 1fr;gap:14px;margin-top:18px}
+.rank-row{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--borderL);font-size:13px}
+.rank-row:last-child{border-bottom:none}
+.rank-n{width:24px;height:24px;border-radius:50%;background:var(--blueL);color:var(--blue);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rank-n.empty{background:var(--borderL);color:var(--textQ)}
+.integrity-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--borderL);font-size:12.5px}
+.integrity-row:last-child{border-bottom:none}
+
+/* ════ BENCHMARKING (PHASE 4 PREVIEW) ════ */
+.bm-preview-banner{background:linear-gradient(90deg,#FFF7E8,#FFFBEB);border:1px solid var(--amberM);border-radius:var(--rL);padding:12px 16px;margin-bottom:20px;font-size:12.5px;color:var(--textM);line-height:1.6;display:flex;gap:11px;align-items:flex-start}
+.bm-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:18px;margin-bottom:18px}
+.dist-chart{display:flex;align-items:flex-end;gap:10px;height:152px;padding:8px 4px 0}
+.dist-bin{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
+.dist-bars{display:flex;align-items:flex-end;gap:3px;height:120px}
+.dist-bar{width:16px;border-radius:4px 4px 0 0;transition:height .6s ease}
+.dist-bar.you{background:var(--blue)}
+.dist-bar.net{background:#C9D8EA}
+.dist-lbl{font-size:10px;color:var(--textQ);font-weight:600;white-space:nowrap}
+.legend{display:flex;gap:16px;font-size:11.5px;color:var(--textM);margin-top:11px}
+.legend .sw{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.pred-dir{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.pred-big{font-size:44px;font-weight:800;letter-spacing:-1.5px;color:var(--amber);line-height:1}
+.pred-range{font-size:13px;color:var(--textM);font-weight:600;margin-top:5px}
+.uncert{position:relative;height:10px;background:var(--borderL);border-radius:6px;margin:16px 0 6px}
+.uncert-band{position:absolute;left:14%;right:34%;top:0;bottom:0;background:linear-gradient(90deg,rgba(217,119,6,.3),rgba(217,119,6,.8) 50%,rgba(217,119,6,.3));border-radius:6px}
+.uncert-mark{position:absolute;left:43%;top:-4px;width:3px;height:18px;background:var(--navy);border-radius:2px}
+.uncert-lbls{display:flex;justify-content:space-between;font-size:10px;color:var(--textQ)}
+.calib-row{display:grid;grid-template-columns:50px 1fr 110px 110px;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--borderL)}
+.calib-row:last-child{border-bottom:none}
+.calib-q{font-weight:700;color:var(--navy);font-size:13px}
+.calib-q .sub{display:block;font-weight:400;font-size:10.5px;color:var(--textQ)}
+.calib-track{position:relative;height:8px;background:var(--borderL);border-radius:5px}
+.calib-zero{position:absolute;left:50%;top:-3px;width:2px;height:14px;background:var(--borderM)}
+.calib-fill{position:absolute;left:50%;top:0;bottom:0;border-radius:0 5px 5px 0}
+.calib-fill.ok{background:var(--green)}
+.calib-fill.warn{background:var(--amber)}
+.calib-nums{font-size:12px;color:var(--textM);font-variant-numeric:tabular-nums;text-align:right}
+.how-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.trust-list{display:grid;grid-template-columns:1fr 1fr;gap:9px;font-size:12.5px;color:var(--textM)}
+.trust-item{display:flex;gap:8px;align-items:flex-start;line-height:1.55}
+
+/* ════ RESPONSIVE — TABLET ≤1100 ════ */
+@media(max-width:1100px){
+  .marking-layout{height:auto;display:flex;flex-direction:column}
+  .paper-viewer{height:56vh;flex-shrink:0}
+  #page-marking{overflow-y:auto}
+  .scoring-col{overflow:visible;padding-bottom:26px}
+  .builder-layout{height:auto;display:flex;flex-direction:column}
+  .builder-output{min-height:430px}
+  .cv-body{display:flex;flex-direction:column;overflow-y:auto}
+  .cv-paper-col{overflow:visible;flex-shrink:0}
+  .cv-mark-col{border-left:none;border-top:1px solid var(--border);overflow:visible}
+  .bm-grid{grid-template-columns:1fr}
+  .td-extras{grid-template-columns:1fr}
+}
+
+/* ════ RESPONSIVE — MOBILE ≤900 ════ */
+@media(max-width:900px){
+  #sidebar{position:fixed;top:0;bottom:0;left:-252px;width:240px;transition:left .26s ease;box-shadow:8px 0 28px rgba(10,18,38,.35);z-index:30}
+  #sidebar.open{left:0}
+  #hamb{display:flex}
+  .topbar-search{display:none}
+  #topbar{padding:0 12px;gap:8px}
+  .breadcrumb a,.breadcrumb .sep{display:none}
+  .cta-full{display:none}
+  .cta-short{display:inline}
+  .cta-access{padding:8px 13px;font-size:12px}
+  .banner-right{display:none}
+  #demo-banner{padding:0 12px}
+  .banner-text{font-size:11px}
+  .page{padding:16px 13px}
+  .metrics{display:flex;overflow-x:auto;gap:9px;padding-bottom:5px;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+  .metric{min-width:130px;flex:0 0 auto}
+  .board{grid-template-columns:1fr;gap:16px}
+  .tbl,.compare-tbl{display:block;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}
+  .agree-summary{gap:8px}
+  .lead-metrics{grid-template-columns:1fr 1fr}
+  .modal,.modal-wide{width:100%;max-height:94vh}
+  .modal-body{padding:16px}
+  .page-head-row{flex-direction:column;align-items:stretch;gap:10px}
+  .how-strip{grid-template-columns:1fr}
+  .paper-sheet{margin:10px;padding:22px 18px}
+  .cv-paper-sheet{padding:20px 16px}
+  .marking-layout{gap:12px}
+  .paper-body{-webkit-overflow-scrolling:touch}
+}
+@media(max-width:640px){
+  .form-row{grid-template-columns:1fr}
+  .mode-grid{grid-template-columns:1fr}
+  .agree-summary{grid-template-columns:1fr}
+  .welcome-steps{grid-template-columns:1fr}
+  .trust-list{grid-template-columns:1fr}
+  .dist-bar{width:10px}
+  .dist-chart{gap:6px}
+  .calib-row{grid-template-columns:44px 1fr 96px;gap:8px}
+  .calib-nums{display:none}
+  #demo-tip{right:10px;bottom:10px}
+}
+
 </style>
 </head>
 <body>
@@ -410,7 +531,7 @@ button{font-family:inherit}
       <div class="nav-item" id="nav-builder" onclick="go('builder')"><span class="nav-icon">✦</span> Auto Task Builder</div>
       <div class="sb-section">School</div>
       <div class="nav-item" id="nav-archive" onclick="go('archive')"><span class="nav-icon">🗄</span> Archive &amp; Audit</div>
-      <div class="nav-item locked"><span class="nav-icon">◷</span> Benchmarking <span class="nav-soon">PHASE 4</span></div>
+      <div class="nav-item" id="nav-bench" onclick="go('bench')"><span class="nav-icon">◷</span> Benchmarking <span class="nav-soon">PHASE 4</span></div>
       <div class="nav-item" id="nav-settings" onclick="go('settings')"><span class="nav-icon">⚙</span> Settings</div>
     </nav>
     <div class="sb-user" onclick="go('settings')">
@@ -422,19 +543,22 @@ button{font-family:inherit}
       </div>
     </div>
   </aside>
+  <div id="scrim" onclick="closeNav()"></div>
 
   <!-- ════ MAIN ════ -->
   <main id="main">
     <div id="demo-banner">
       <span class="banner-text"><span class="banner-tag">Demo</span><strong>Interactive product demo</strong> — every screen is clickable. Running on sample data.</span>
-      <span class="banner-text" style="opacity:.8">Built by a practising VCE teacher</span>
+      <span class="banner-text banner-right" style="opacity:.8">Built by a practising VCE teacher</span>
     </div>
 
     <div id="topbar">
+      <button id="hamb" onclick="toggleNav()" aria-label="Menu">☰</button>
       <div id="breadcrumb" class="breadcrumb"><span class="cur">Home</span></div>
       <div class="topbar-right">
         <div class="topbar-search">⌕ <span>Search tasks, students…</span></div>
-        <button class="cta-access" onclick="openAccess()"><span class="pulse"></span>Request early access</button>
+        <button id="tips-btn" onclick="toggleTips()" title="Toggle demo tips" aria-label="Toggle demo tips">?</button>
+        <button class="cta-access" onclick="openAccess()"><span class="pulse"></span><span class="cta-full">Request early access</span><span class="cta-short">Early access</span></button>
       </div>
     </div>
 
@@ -679,6 +803,27 @@ button{font-family:inherit}
           </tbody>
         </table>
         <div class="small muted mt12" style="display:flex;gap:8px;align-items:center"><span>↩ Every removal is a soft-delete with a warning — marks and moderation records are recoverable.</span></div>
+        <div class="td-extras">
+          <div class="panel-card">
+            <div class="panel-title">Cohort ranking <span style="margin-left:auto;font-weight:400;text-transform:none;letter-spacing:0;color:var(--textQ)">live as you mark</span></div>
+            <div class="rank-row"><div class="rank-n">1</div><div style="flex:1"><b>Priya Sharma</b></div><div class="td-total">22 / 30</div><div class="td-pct">73%</div></div>
+            <div class="rank-row"><div class="rank-n empty">—</div><div style="flex:1;color:var(--textQ)">James Kowalski</div><div class="td-mut">awaiting mark</div></div>
+            <div class="rank-row"><div class="rank-n empty">—</div><div style="flex:1;color:var(--textQ)">Anh Nguyen</div><div class="td-mut">awaiting mark</div></div>
+            <div class="rank-row"><div class="rank-n empty">—</div><div style="flex:1;color:var(--textQ)">Sophie Lamont</div><div class="td-mut">awaiting mark</div></div>
+            <div class="rank-row"><div class="rank-n empty">—</div><div style="flex:1;color:var(--textQ)">Oscar Petrov</div><div class="td-mut">awaiting mark</div></div>
+            <div class="small muted mt12">Ranking populates as marks are entered — useful for the rank-order check VCAA expects on summative tasks.</div>
+          </div>
+          <div class="panel-card">
+            <div class="panel-title">Integrity &amp; authentication record</div>
+            <div class="integrity-row"><span class="muted">Draft checkpoints captured</span><span><b>2 of 5</b> students</span></div>
+            <div class="integrity-row"><span class="muted">Submission timestamps logged</span><span class="badge badge-green">All 5</span></div>
+            <div class="integrity-row"><span class="muted">Cross-marking / moderation trail</span><span class="badge badge-grey">Not yet started</span></div>
+            <div class="integrity-row"><span class="muted">Suggest-marks usage logged</span><span class="badge badge-purple">1 paper</span></div>
+            <div class="integrity-row"><span class="muted">Duplicate-copy shares</span><span><b>0</b></span></div>
+            <div class="small muted mt12">Everything here feeds the School Archive &amp; the VCAA audit pack — the authentication evidence assembles itself as you work.</div>
+          </div>
+        </div>
+
       </div>
 
       <!-- ═══════════════ MARKING ═══════════════ -->
@@ -1081,6 +1226,71 @@ button{font-family:inherit}
         </div>
       </div>
 
+
+      <!-- ═══════════════ BENCHMARKING (PHASE 4 PREVIEW) ═══════════════ -->
+      <div id="page-bench" class="page">
+        <div class="page-head-row">
+          <div>
+            <div class="page-title">Inter-school Benchmarking <span class="badge badge-amber" style="margin-left:8px;vertical-align:3px">Phase 4 preview</span></div>
+            <div class="page-sub mb0">A directional, uncertainty-stated read on how your cohort's marking compares to the network standard — before statistical moderation, not after.</div>
+          </div>
+          <select class="form-select" style="width:auto"><option>SAC 1 — Operations Management</option><option>Unit 1 SAC — Business Foundations</option></select>
+        </div>
+
+        <div class="bm-preview-banner"><span style="font-size:16px">🔭</span><span><b style="color:var(--amber)">This is the moat.</b> Benchmarking unlocks at network density (~30–50 BM schools). It is built on anchor-linked, cross-marked, outcome-validated data — never raw league tables. Everything below is illustrative sample data showing the intended design &amp; functionality.</span></div>
+
+        <div class="bm-grid">
+          <div class="panel-card">
+            <div class="panel-title">Your cohort vs the network — score distribution</div>
+            <div class="dist-chart">
+              <div class="dist-bin"><div class="dist-bars"><div class="dist-bar net" style="height:8%"></div><div class="dist-bar you" style="height:4%"></div></div><div class="dist-lbl">0–49</div></div>
+              <div class="dist-bin"><div class="dist-bars"><div class="dist-bar net" style="height:24%"></div><div class="dist-bar you" style="height:14%"></div></div><div class="dist-lbl">50–59</div></div>
+              <div class="dist-bin"><div class="dist-bars"><div class="dist-bar net" style="height:52%"></div><div class="dist-bar you" style="height:40%"></div></div><div class="dist-lbl">60–69</div></div>
+              <div class="dist-bin"><div class="dist-bars"><div class="dist-bar net" style="height:78%"></div><div class="dist-bar you" style="height:100%"></div></div><div class="dist-lbl">70–79</div></div>
+              <div class="dist-bin"><div class="dist-bars"><div class="dist-bar net" style="height:48%"></div><div class="dist-bar you" style="height:74%"></div></div><div class="dist-lbl">80–89</div></div>
+              <div class="dist-bin"><div class="dist-bars"><div class="dist-bar net" style="height:20%"></div><div class="dist-bar you" style="height:30%"></div></div><div class="dist-lbl">90–100</div></div>
+            </div>
+            <div class="legend"><span><span class="sw" style="background:var(--blue)"></span>Your cohort (n=24)</span><span><span class="sw" style="background:#C9D8EA"></span>Network (n=1,180 · 38 schools)</span></div>
+            <div class="small muted mt12">Your mean sits <b style="color:var(--amber)">+4.2 marks</b> above the network mean. This pattern suggests your marking may be slightly lenient on this task relative to the standard.</div>
+          </div>
+
+          <div class="panel-card" style="display:flex;flex-direction:column;justify-content:center;text-align:center">
+            <div class="pred-dir">Predicted moderation effect</div>
+            <div class="pred-big">−3 to −5</div>
+            <div class="pred-range">study-score-scale marks, cohort mean</div>
+            <div class="uncert"><div class="uncert-band"></div><div class="uncert-mark"></div></div>
+            <div class="uncert-lbls"><span>−8</span><span>no change</span><span>+4</span></div>
+            <div class="small muted mt12" style="line-height:1.6">Directional estimate only · 68% confidence band shown · based on 3 anchor items + GAT correlation. <b>Not a prediction of individual results.</b></div>
+          </div>
+        </div>
+
+        <div class="panel-card" style="margin-bottom:18px">
+          <div class="panel-title">Per-question calibration vs network <span style="margin-left:auto;font-weight:400;text-transform:none;letter-spacing:0;color:var(--textQ)">how your marks compare, question by question</span></div>
+          <div class="calib-row" style="border-bottom:2px solid var(--border)"><div class="small muted" style="font-weight:600">Question</div><div class="small muted" style="font-weight:600">Leniency ← → Severity vs network</div><div class="small muted" style="font-weight:600;text-align:right">Your avg</div><div class="small muted" style="font-weight:600;text-align:right">Network avg</div></div>
+          <div class="calib-row"><div class="calib-q">Q1<span class="sub">Define</span></div><div class="calib-track"><div class="calib-zero"></div><div class="calib-fill ok" style="width:6%"></div></div><div class="calib-nums">3.4 / 4</div><div class="calib-nums">3.3 / 4</div></div>
+          <div class="calib-row"><div class="calib-q">Q2<span class="sub">Tech strategies</span></div><div class="calib-track"><div class="calib-zero"></div><div class="calib-fill ok" style="width:11%"></div></div><div class="calib-nums">4.8 / 6</div><div class="calib-nums">4.5 / 6</div></div>
+          <div class="calib-row"><div class="calib-q">Q3<span class="sub">Materials + waste</span></div><div class="calib-track"><div class="calib-zero"></div><div class="calib-fill warn" style="width:30%"></div></div><div class="calib-nums">6.6 / 8</div><div class="calib-nums">5.4 / 8</div></div>
+          <div class="calib-row"><div class="calib-q">Q4<span class="sub">Evaluate TQM</span></div><div class="calib-track"><div class="calib-zero"></div><div class="calib-fill warn" style="width:24%"></div></div><div class="calib-nums">9.1 / 12</div><div class="calib-nums">7.8 / 12</div></div>
+          <div class="small muted mt12"><span class="badge badge-amber">Insight</span> &nbsp;Q3 and Q4 are where your marking is most lenient relative to the network — the extended-response questions. These are the highest-value questions to bring to your next cross-marking round.</div>
+        </div>
+
+        <div class="card" style="background:var(--blueXL);border-color:var(--blueM)">
+          <div style="font-size:13.5px;font-weight:700;color:var(--navy);margin-bottom:13px">How the benchmark is built — and why it's defensible</div>
+          <div class="how-strip">
+            <div><div style="font-size:13px;font-weight:700;color:var(--blue);margin-bottom:5px">① Anchor items</div><div class="small muted" style="line-height:1.6">Common questions generated from shared blueprints appear across schools, creating comparable reference points without sharing live papers.</div></div>
+            <div><div style="font-size:13px;font-weight:700;color:var(--blue);margin-bottom:5px">② Cross-mark calibration</div><div class="small muted" style="line-height:1.6">Every cross-marking round contributes per-question agreement data — the network learns the standard from real teacher consensus.</div></div>
+            <div><div style="font-size:13px;font-weight:700;color:var(--blue);margin-bottom:5px">③ Outcome validation</div><div class="small muted" style="line-height:1.6">Historical SAC-to-exam data trains the moderation-effect model, so estimates improve every year as real results come in.</div></div>
+          </div>
+          <div class="divider"></div>
+          <div class="trust-list">
+            <div class="trust-item"><span style="color:var(--green)">✓</span><span><b>Never league tables.</b> Schools are never ranked against each other; you only ever see yourself vs an anonymised aggregate.</span></div>
+            <div class="trust-item"><span style="color:var(--green)">✓</span><span><b>Opt-in &amp; anonymised.</b> Your data joins the network only if you choose; all comparisons are de-identified and thresholded.</span></div>
+            <div class="trust-item"><span style="color:var(--green)">✓</span><span><b>Self-calibration framing.</b> The tool helps you align to the standard — it is a teacher aid, not a judgement of your school.</span></div>
+            <div class="trust-item"><span style="color:var(--green)">✓</span><span><b>Directional, not deterministic.</b> Every figure states its uncertainty; nothing claims to predict an individual student's ATAR.</span></div>
+          </div>
+        </div>
+      </div>
+
     </div><!-- /pages -->
   </main>
 </div><!-- /app -->
@@ -1330,6 +1540,34 @@ button{font-family:inherit}
   </div>
 </div>
 
+<!-- ═══════════════ WELCOME / DEMO EXPLAINER MODAL ═══════════════ -->
+<div id="modal-welcome" class="modal-backdrop" onclick="closeModalBg(event,'modal-welcome')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-head access">
+      <div><span class="modal-title">👋 Welcome to the Moderato demo</span><div class="modal-sub-h">A working preview — built by a practising VCE teacher</div></div>
+      <span class="modal-close" onclick="closeModal('modal-welcome')">×</span>
+    </div>
+    <div class="modal-body">
+      <div style="font-size:13.5px;color:var(--textM);line-height:1.65">This is an interactive demo running on <b>fictional sample data</b>. Every screen is clickable — explore freely, nothing you do here is saved or sent.</div>
+      <div class="welcome-steps">
+        <div class="w-step"><div class="w-n">1</div><div><b>Mark a paper</b> — open Tasks → a student, and enter marks. Totals calculate live.</div></div>
+        <div class="w-step"><div class="w-n">2</div><div><b>Send a moderation link</b> — see the no-sign-up flow your colleague receives.</div></div>
+        <div class="w-step"><div class="w-n">3</div><div><b>Explore the moat</b> — the Benchmarking page shows the cross-school vision.</div></div>
+        <div class="w-step"><div class="w-n">4</div><div><b>Watch for tips</b> — the <b style="color:var(--blue)">?</b> button (top bar) reopens the on-page guide.</div></div>
+      </div>
+      <div class="small muted mt16" style="display:flex;align-items:center;gap:8px"><span class="badge badge-amber">Tip</span> On a phone? Tap the ☰ icon (top-left) for the menu. The demo is built for both phone and laptop.</div>
+    </div>
+    <div class="modal-footer"><button class="btn cta-access" style="box-shadow:none" onclick="closeModal('modal-welcome')">Start exploring →</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════ FLOATING PER-PAGE TIP ═══════════════ -->
+<div id="demo-tip">
+  <div class="dt-head"><span id="tip-title">DEMO TIP</span><span class="dt-x" onclick="hideTip()">×</span></div>
+  <div class="dt-body" id="tip-body"></div>
+</div>
+
+
 <!-- ═══════════════ TOAST ═══════════════ -->
 <div id="toast" class="toast"><span class="tcheck">✓</span><span id="toast-msg"></span></div>
 
@@ -1346,7 +1584,7 @@ var WEB3FORMS_ACCESS_KEY = "c452d3d7-e34e-4185-99f7-4840f12372c8";
 var CONTACT_EMAIL = "marcus@fisalprojects.com";
 
 /* ──────── Page navigation ──────── */
-var navMap = {home:'nav-home',tasks:'nav-tasks',taskdetail:'nav-tasks',marking:'nav-tasks',cross:'nav-cross',modresults:'nav-cross',builder:'nav-builder',archive:'nav-archive',settings:'nav-settings'};
+var navMap = {home:'nav-home',tasks:'nav-tasks',taskdetail:'nav-tasks',marking:'nav-tasks',cross:'nav-cross',modresults:'nav-cross',builder:'nav-builder',bench:'nav-bench',archive:'nav-archive',settings:'nav-settings'};
 var crumbs = {
   home:'<span class="cur">Home</span>',
   tasks:'<a onclick="go(\'home\')">Home</a><span class="sep">/</span><span class="cur">Tasks</span>',
@@ -1355,10 +1593,13 @@ var crumbs = {
   cross:'<a onclick="go(\'home\')">Home</a><span class="sep">/</span><span class="cur">Cross-marking</span>',
   modresults:'<a onclick="go(\'home\')">Home</a><span class="sep">/</span><a onclick="go(\'cross\')">Cross-marking</a><span class="sep">/</span><span class="cur">Unit 1 SAC comparison</span>',
   builder:'<a onclick="go(\'home\')">Home</a><span class="sep">/</span><span class="cur">Auto Task Builder</span>',
+  bench:'<a onclick="go(\'home\')">Home</a><span class="sep">/</span><span class="cur">Benchmarking</span>',
   archive:'<a onclick="go(\'home\')">Home</a><span class="sep">/</span><span class="cur">School Archive &amp; Audit</span>',
   settings:'<a onclick="go(\'home\')">Home</a><span class="sep">/</span><span class="cur">Settings</span>'
 };
+var currentView='home';
 function go(view){
+  currentView=view;
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
   var pg=document.getElementById('page-'+view);
   if(pg)pg.classList.add('active');
@@ -1369,6 +1610,8 @@ function go(view){
   if(bc&&crumbs[view])bc.innerHTML=crumbs[view];
   var pages=document.getElementById('pages');
   if(pages)pages.scrollTop=0;
+  closeNav();
+  showTipFor(view);
 }
 function openTaskDetail(){go('taskdetail');}
 function openMarking(){go('marking');}
@@ -1530,8 +1773,53 @@ function submitAccess(){
   }
 }
 
+
+/* ──────── Mobile drawer nav ──────── */
+function toggleNav(){
+  var sb=document.getElementById('sidebar'),sc=document.getElementById('scrim');
+  var open=sb.classList.toggle('open');sc.classList.toggle('show',open);
+}
+function closeNav(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('scrim').classList.remove('show');
+}
+
+/* ──────── Per-page demo tips ──────── */
+var tipsEnabled=true;
+var seenTips={};
+var tipContent={
+  home:["YOUR DASHBOARD","Information-dense by design — the metric strip and task board surface everything at a glance. Tap any metric to jump to it. On mobile the metrics scroll sideways."],
+  tasks:["ALL YOUR TASKS","Every assessment across your whole teaching load — formative and summative, all units. You tick which curriculum offerings appear, so you only see your classes."],
+  taskdetail:["INSIDE A TASK","The roster, live cohort ranking, and the authentication record that builds as you mark. Click any student to open the marking view. Removals are soft-deletes with warnings."],
+  marking:["THE MARKING SCREEN","The full student submission sits on the left; you enter per-question marks on the right and the total calculates live. The purple panel is advisory AI — it suggests ranges but never fills marks in for you."],
+  cross:["CROSS-MARKING — THE CORE","Send any paper to a colleague who marks it with no sign-up. Marks return side-by-side with discrepancies auto-flagged. This is also where the comparable data behind benchmarking accrues."],
+  modresults:["MODERATION COMPARISON","Your marks vs your colleague's, question by question. Flagged rows exceed your discrepancy threshold. Reconcile to an agreed final and the whole discussion is logged for audit."],
+  builder:["AUTO TASK BUILDER","Generate a full task + rubric (or just a rubric) grounded in the real VCE Study Design. Output is unique every time — never a static bank — and exports to PDF or Word."],
+  bench:["BENCHMARKING — THE MOAT","Your Phase-4 payoff: a directional, uncertainty-stated read on how your marking compares to the network standard, before statistical moderation. Built on anchor items + cross-mark data, never league tables."],
+  archive:["SCHOOL ARCHIVE & AUDIT","The leadership view — a durable, school-wide record of every assessment, mark and moderation round, with a one-click VCAA audit pack. This is what justifies the school site-licence."],
+  settings:["CONFIGURATION","Switch roles (Teacher / Coordinator / School Admin) to see how access changes. The advisory AI is disable-able school-wide, and all data is Australian-hosted in Sydney."]
+};
+function showTipFor(view){
+  if(!tipsEnabled)return;
+  var t=tipContent[view];if(!t)return;
+  if(seenTips[view])return;          /* show each tip once per session, unobtrusively */
+  seenTips[view]=true;
+  document.getElementById('tip-title').textContent=t[0];
+  document.getElementById('tip-body').textContent=t[1];
+  document.getElementById('demo-tip').classList.add('show');
+  clearTimeout(window._tipTimer);
+  window._tipTimer=setTimeout(hideTip,8500);
+}
+function hideTip(){document.getElementById('demo-tip').classList.remove('show');}
+function toggleTips(){
+  tipsEnabled=!tipsEnabled;
+  var b=document.getElementById('tips-btn');
+  if(tipsEnabled){b.style.background='var(--blueL)';b.style.borderColor='var(--blue)';seenTips={};showTipFor(currentView);toast('Demo tips on');}
+  else{b.style.background='var(--surface)';b.style.borderColor='';hideTip();toast('Demo tips off');}
+}
+
 /* ──────── Init ──────── */
-document.addEventListener('DOMContentLoaded',function(){go('home');});
+document.addEventListener('DOMContentLoaded',function(){go('home');setTimeout(function(){openModal('modal-welcome');},420);});
 </script>
 </body>
 </html>
