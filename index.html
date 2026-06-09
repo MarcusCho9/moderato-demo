@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moderato — Interactive Product Demo</title>
+<meta name="description" content="Moderato — the marking, moderation and assessment hub built by a VCE teacher, for VCE teachers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1B2A4A;--navy2:#243756;--navy3:#2E466B;
+  --blue:#2E75B6;--blueD:#255a94;--blueL:#EEF4FB;--blueM:#D0E4F5;--blueXL:#F6FAFE;
+  --amber:#D97706;--amberL:#FFFBEB;--amberM:#FEF3C7;
+  --green:#059669;--greenL:#ECFDF5;--greenM:#D1FAE5;
+  --red:#DC2626;--redL:#FEF2F2;--redM:#FEE2E2;
+  --purple:#7C3AED;--purpleL:#F5F3FF;--purpleM:#EDE9FE;
+  --bg:#EEF3F9;--surface:#FFFFFF;
+  --border:#E2E8F0;--borderM:#CBD5E1;--borderL:#EFF3F8;
+  --text:#172033;--textM:#475569;--textQ:#94A3B8;
+  --sidebar:222px;--topbar:56px;--banner:34px;
+  --r:8px;--rL:12px;--rXL:16px;
+  --shadow:0 1px 3px rgba(16,32,64,.06);
+  --shadowL:0 4px 16px rgba(16,32,64,.1);
+  --shadowXL:0 20px 56px rgba(10,18,38,.22);
+}
+html,body{height:100%;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-size:14px;color:var(--text);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font-family:inherit}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#CFDAE6;border-radius:5px;border:2px solid transparent;background-clip:padding-box}
+::-webkit-scrollbar-thumb:hover{background:#B6C5D6;background-clip:padding-box}
+
+#app{display:flex;height:100vh}
+
+/* ════ SIDEBAR ════ */
+#sidebar{width:var(--sidebar);background:var(--navy);display:flex;flex-direction:column;flex-shrink:0;z-index:20}
+.sb-logo{padding:18px 18px 15px;border-bottom:1px solid rgba(255,255,255,.07)}
+.sb-logo-text{font-size:20px;font-weight:800;color:#fff;letter-spacing:-.5px}
+.sb-vce{display:inline-block;font-size:10px;font-weight:600;color:#9CC8EE;background:rgba(46,117,182,.22);border:1px solid rgba(46,117,182,.45);padding:1px 6px;border-radius:4px;margin-left:7px;letter-spacing:.5px;vertical-align:2px}
+.sb-nav{flex:1;padding:9px 0;overflow-y:auto}
+.sb-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12)}
+.sb-section{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.3);padding:14px 18px 6px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 18px;color:rgba(255,255,255,.6);cursor:pointer;font-size:13.5px;font-weight:400;transition:background .14s,color .14s;user-select:none;border-left:2px solid transparent}
+.nav-item:hover{background:rgba(255,255,255,.055);color:rgba(255,255,255,.92)}
+.nav-item.active{background:rgba(46,117,182,.2);color:#fff;font-weight:600;border-left-color:var(--blue)}
+.nav-item.locked{opacity:.34;cursor:default;pointer-events:none}
+.nav-icon{font-size:16px;width:20px;text-align:center;flex-shrink:0}
+.nav-badge{margin-left:auto;background:var(--amber);color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:9px;min-width:18px;text-align:center}
+.nav-soon{margin-left:auto;font-size:9px;font-weight:600;color:rgba(255,255,255,.4);background:rgba(255,255,255,.08);padding:1px 6px;border-radius:8px;letter-spacing:.3px}
+.sb-user{padding:12px 16px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:10px;cursor:pointer}
+.sb-user:hover{background:rgba(255,255,255,.04)}
+.sb-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#2E75B6,#3E8DD4);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700;flex-shrink:0}
+.sb-name{font-size:13px;color:rgba(255,255,255,.88);font-weight:500;line-height:1.3}
+.sb-school{font-size:11px;color:rgba(255,255,255,.4);line-height:1.3}
+.sb-role-switch{margin-top:1px;font-size:10px;color:#9CC8EE;font-weight:500}
+
+/* ════ MAIN ════ */
+#main{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative}
+
+/* Demo banner */
+#demo-banner{height:var(--banner);background:linear-gradient(90deg,#16233D,#1B2A4A 60%);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.06)}
+.banner-text{font-size:12px;color:rgba(255,255,255,.7)}
+.banner-text strong{color:#fff;font-weight:600}
+.banner-tag{display:inline-block;background:var(--blue);color:#fff;font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:5px;letter-spacing:.6px;margin-right:9px;text-transform:uppercase}
+
+/* Top bar */
+#topbar{height:var(--topbar);background:var(--surface);border-bottom:1px solid var(--border);padding:0 22px;display:flex;align-items:center;gap:10px;flex-shrink:0;z-index:10}
+.breadcrumb{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--textM);min-width:0}
+.breadcrumb a{color:var(--blue);cursor:pointer;text-decoration:none;font-weight:500;white-space:nowrap}
+.breadcrumb a:hover{text-decoration:underline}
+.breadcrumb .sep{color:var(--textQ);flex-shrink:0}
+.breadcrumb .cur{color:var(--text);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar-right{margin-left:auto;display:flex;gap:9px;align-items:center}
+.topbar-search{display:flex;align-items:center;gap:7px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:12.5px;color:var(--textQ);width:200px}
+
+/* CTA — prominent early access button */
+.cta-access{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#E8890C,#D97706);color:#fff;font-size:13px;font-weight:700;padding:9px 17px;border-radius:9px;border:none;cursor:pointer;box-shadow:0 2px 10px rgba(217,119,6,.35);transition:transform .12s,box-shadow .12s;white-space:nowrap}
+.cta-access:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(217,119,6,.45)}
+.cta-access .pulse{width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 0 0 rgba(255,255,255,.7);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.6)}70%{box-shadow:0 0 0 7px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 15px;border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all .14s;white-space:nowrap}
+.btn-primary{background:var(--blue);color:#fff}.btn-primary:hover{background:var(--blueD)}
+.btn-secondary{background:var(--surface);color:var(--text);border:1px solid var(--borderM)}.btn-secondary:hover{border-color:var(--blue);color:var(--blue)}
+.btn-ghost{background:transparent;color:var(--blue);padding:6px 10px}.btn-ghost:hover{background:var(--blueL)}
+.btn-success{background:var(--green);color:#fff}
+.btn-purple{background:var(--purple);color:#fff}.btn-purple:hover{background:#6D28D9}
+.btn-sm{padding:6px 12px;font-size:12px}
+.btn-lg{padding:11px 22px;font-size:14px}
+.btn-block{width:100%;justify-content:center}
+.btn[disabled]{opacity:.6;cursor:default}
+
+/* Pages */
+#pages{flex:1;overflow:hidden;position:relative}
+.page{height:100%;overflow-y:auto;padding:24px 26px;display:none;animation:fadeIn .25s ease}
+.page.active{display:block}
+.page-flush{padding:18px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.page-title{font-size:22px;font-weight:700;color:var(--text);margin-bottom:3px;letter-spacing:-.3px}
+.page-sub{font-size:13px;color:var(--textM);margin-bottom:22px}
+.page-head-row{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px;gap:16px}
+.page-head-row .page-sub{margin-bottom:0}
+
+/* Badges */
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:2px 9px;border-radius:20px;white-space:nowrap}
+.badge-blue{background:var(--blueL);color:var(--blue)}
+.badge-green{background:var(--greenL);color:var(--green)}
+.badge-amber{background:var(--amberL);color:var(--amber)}
+.badge-grey{background:#F1F5F9;color:var(--textM)}
+.badge-red{background:var(--redL);color:var(--red)}
+.badge-purple{background:var(--purpleL);color:var(--purple)}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+
+/* Metric strip */
+.metrics{display:grid;grid-template-columns:repeat(6,1fr);gap:11px;margin-bottom:24px}
+.metric{background:var(--surface);border:1px solid var(--border);border-radius:var(--rL);padding:14px 15px;cursor:pointer;transition:border-color .15s,transform .1s,box-shadow .15s}
+.metric:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:var(--shadowL)}
+.metric-n{font-size:27px;font-weight:700;line-height:1;margin-bottom:5px;letter-spacing:-.5px}
+.metric-n.urg{color:var(--amber)}.metric-n.gd{color:var(--green)}.metric-n.bl{color:var(--blue)}.metric-n.nt{color:var(--text)}.metric-n.rd{color:var(--red)}
+.metric-l{font-size:11px;color:var(--textM);font-weight:500;line-height:1.3}
+
+/* Board layout */
+.board{display:grid;grid-template-columns:1.9fr 1fr;gap:22px}
+.section-head{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--textM);margin-bottom:13px;display:flex;align-items:center;gap:9px}
+.section-head.mt{margin-top:24px}
+.s-count{background:var(--blueL);color:var(--blue);font-size:11px;padding:1px 8px;border-radius:10px;font-weight:700;letter-spacing:0;text-transform:none}
+.section-action{margin-left:auto;font-size:12px;font-weight:600;color:var(--blue);cursor:pointer;text-transform:none;letter-spacing:0}
+.section-action:hover{text-decoration:underline}
+
+/* Task cards */
+.task-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rL);padding:15px 17px;margin-bottom:11px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.task-card:hover{border-color:var(--blue);box-shadow:var(--shadowL)}
+.tc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:9px}
+.tc-name{font-size:14.5px;font-weight:600;color:var(--text);line-height:1.35}
+.tc-sub{font-size:12px;color:var(--textM);margin-top:3px}
+.tc-tags{display:flex;gap:6px;align-items:center;flex-shrink:0}
+.progress{height:6px;background:var(--borderL);border-radius:4px;overflow:hidden;margin:11px 0 7px}
+.progress-fill{height:100%;border-radius:4px;transition:width .5s ease}
+.tc-meta{display:flex;gap:14px;font-size:11.5px;color:var(--textQ);flex-wrap:wrap}
+.tc-meta b{color:var(--textM);font-weight:600}
+
+/* Notifications */
+.notif{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:8px;display:flex;gap:11px;align-items:flex-start}
+.notif-ico{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.notif-ico.green{background:var(--greenL)}.notif-ico.blue{background:var(--blueL)}.notif-ico.amber{background:var(--amberL)}
+.notif-title{font-weight:600;font-size:12.5px;margin-bottom:1px;line-height:1.35}
+.notif-sub{font-size:11.5px;color:var(--textQ);line-height:1.4}
+
+/* Generic cards & panels */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rL);padding:16px 18px}
+.panel-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rL);padding:15px 17px}
+.panel-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--textM);margin-bottom:13px;display:flex;align-items:center;gap:8px}
+
+/* Tables */
+.tbl{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:var(--rL);overflow:hidden}
+.tbl thead tr{background:var(--bg)}
+.tbl th{text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--textM);padding:11px 15px;border-bottom:1px solid var(--border);white-space:nowrap}
+.tbl td{padding:13px 15px;border-bottom:1px solid var(--borderL);font-size:13.5px;vertical-align:middle}
+.tbl tbody tr:last-child td{border-bottom:none}
+.tbl tbody tr{transition:background .12s}
+.tbl tbody tr.clickable{cursor:pointer}
+.tbl tbody tr.clickable:hover td{background:var(--blueXL)}
+.td-name{font-weight:600;color:var(--text)}
+.td-score{font-variant-numeric:tabular-nums;font-weight:600;color:var(--text)}
+.td-mut{color:var(--textQ)}
+.td-total{font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+.td-pct{color:var(--textM);font-size:12px;font-variant-numeric:tabular-nums}
+.avatar-sm{width:28px;height:28px;border-radius:50%;background:var(--blueL);color:var(--blue);display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-right:9px;vertical-align:middle}
+
+/* Filters / chips */
+.filter-bar{display:flex;gap:8px;align-items:center;margin-bottom:18px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 13px;border-radius:20px;font-size:12.5px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--textM);transition:all .14s;user-select:none}
+.chip:hover{border-color:var(--blueM)}
+.chip.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.chip-count{font-size:10.5px;opacity:.7}
+
+/* Forms */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.form-group{margin-bottom:15px}
+.form-label{font-size:11.5px;font-weight:600;color:var(--textM);margin-bottom:6px;display:block}
+.form-label .req{color:var(--red)}
+.form-input,.form-select,.form-textarea{width:100%;border:1.5px solid var(--borderM);border-radius:8px;padding:10px 13px;font-size:13.5px;font-family:inherit;color:var(--text);outline:none;transition:border-color .14s,box-shadow .14s;background:var(--surface)}
+.form-input{height:42px}
+.form-textarea{min-height:80px;resize:vertical;line-height:1.5}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(46,117,182,.1)}
+.form-hint{font-size:11.5px;color:var(--textQ);margin-top:5px;line-height:1.4}
+.form-section-title{font-size:13px;font-weight:700;color:var(--navy);margin:22px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--border)}
+.form-section-title:first-child{margin-top:0}
+
+/* Score inputs */
+.score-input{width:54px;height:40px;border:2px solid var(--border);border-radius:8px;font-size:17px;font-weight:700;text-align:center;color:var(--navy);background:var(--bg);outline:none;font-family:inherit;transition:all .14s}
+.score-input:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(46,117,182,.13)}
+.score-input.filled{background:var(--blueL);border-color:var(--blueM)}
+
+/* Modal */
+.modal-backdrop{position:fixed;inset:0;background:rgba(10,18,38,.62);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);display:none;align-items:center;justify-content:center;z-index:200;padding:20px;animation:fadeIn .2s ease}
+.modal-backdrop.open{display:flex}
+.modal{width:460px;max-width:100%;background:#fff;border-radius:var(--rXL);overflow:hidden;box-shadow:var(--shadowXL);max-height:92vh;display:flex;flex-direction:column;animation:modalIn .28s cubic-bezier(.2,.9,.3,1.1)}
+.modal-wide{width:680px}
+@keyframes modalIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.modal-head{background:var(--navy);padding:18px 22px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.modal-head.access{background:linear-gradient(135deg,#1B2A4A,#2E466B)}
+.modal-title{font-size:15.5px;font-weight:700;color:#fff;display:flex;align-items:center;gap:9px}
+.modal-sub-h{font-size:12px;color:rgba(255,255,255,.6);margin-top:3px;font-weight:400}
+.modal-close{color:rgba(255,255,255,.45);cursor:pointer;font-size:24px;line-height:1;padding:0 4px;transition:color .14s}
+.modal-close:hover{color:#fff}
+.modal-body{padding:22px;overflow-y:auto}
+.modal-step{display:none}
+.modal-step.active{display:block}
+.modal-footer{padding:16px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:9px;flex-shrink:0}
+.modal-note{background:var(--blueL);border-radius:9px;padding:12px 14px;font-size:13px;color:var(--textM);line-height:1.6;margin-bottom:16px}
+.modal-note strong{color:var(--blue)}
+
+/* Mode option cards */
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.mode-opt{border:2px solid var(--border);border-radius:10px;padding:13px 15px;cursor:pointer;transition:all .14s}
+.mode-opt:hover{border-color:var(--blueM)}
+.mode-opt.sel{border-color:var(--blue);background:var(--blueL)}
+.mode-title{font-size:13px;font-weight:600;color:var(--text)}
+.mode-desc{font-size:11.5px;color:var(--textQ);margin-top:3px;line-height:1.4}
+.mode-opt.sel .mode-desc{color:var(--blue)}
+
+/* Generic helpers */
+.flex{display:flex}.between{justify-content:space-between}.items-center{align-items:center}.gap8{gap:8px}.gap12{gap:12px}.mt8{margin-top:8px}.mt12{margin-top:12px}.mt16{margin-top:16px}.mt20{margin-top:20px}.mb0{margin-bottom:0}
+.muted{color:var(--textM)}.small{font-size:12px}
+.divider{height:1px;background:var(--border);margin:16px 0}
+.empty-state{text-align:center;padding:40px 20px;color:var(--textQ);font-size:13px}
+.empty-state .ico{font-size:32px;margin-bottom:10px;opacity:.5}
+
+/* ════ MARKING VIEW ════ */
+.marking-layout{display:grid;grid-template-columns:1fr 400px;gap:18px;height:calc(100vh - var(--topbar) - var(--banner) - 36px)}
+.paper-viewer{background:var(--surface);border:1px solid var(--border);border-radius:var(--rL);display:flex;flex-direction:column;overflow:hidden}
+.paper-toolbar{background:var(--bg);border-bottom:1px solid var(--border);padding:11px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.paper-toolbar .doc-name{font-size:12.5px;color:var(--textM);font-weight:500}
+.paper-zoom{margin-left:auto;display:flex;gap:4px;align-items:center;color:var(--textQ);font-size:12px}
+.paper-body{flex:1;padding:0;overflow-y:auto;background:#F4F6FA}
+.paper-sheet{background:#fff;margin:18px;padding:34px 40px;border-radius:6px;box-shadow:0 1px 8px rgba(16,32,64,.08);font-size:13.5px;line-height:1.85;color:#1A2436}
+.paper-letterhead{text-align:center;padding-bottom:18px;margin-bottom:22px;border-bottom:2px solid var(--navy)}
+.paper-school{font-size:17px;font-weight:800;color:var(--navy);letter-spacing:-.2px}
+.paper-course{font-size:13px;color:var(--textM);margin-top:4px;font-weight:500}
+.paper-task-title{font-size:14px;font-weight:700;color:var(--text);margin-top:9px}
+.paper-student-line{font-size:12.5px;color:var(--textM);margin-top:7px;font-style:italic}
+.paper-q{margin-bottom:26px}
+.pq-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:3px}
+.pq-num{font-size:14px;font-weight:700;color:var(--navy)}
+.pq-marks-tag{font-size:11.5px;font-weight:600;color:var(--blue);background:var(--blueL);padding:2px 9px;border-radius:12px;white-space:nowrap}
+.pq-prompt{font-size:13px;font-weight:600;color:var(--text);margin-bottom:9px;line-height:1.5}
+.pq-answer{color:#2A3547;font-size:13px;line-height:1.85}
+.pq-answer p{margin-bottom:9px}
+.pq-answer p:last-child{margin-bottom:0}
+.handwritten{font-family:'Segoe Print','Bradley Hand',cursive;font-size:14px;color:#1A3A6B;line-height:2}
+
+/* Scoring panel (right column) */
+.scoring-col{display:flex;flex-direction:column;gap:13px;overflow-y:auto;padding-right:3px}
+.mark-student-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rL);padding:14px 16px}
+.mark-student-name{font-size:16px;font-weight:700;color:var(--navy)}
+.mark-student-meta{font-size:12px;color:var(--textM);margin-top:2px}
+.score-row{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--borderL)}
+.score-row:last-of-type{border-bottom:none}
+.score-q{font-size:13px;font-weight:700;width:26px;color:var(--navy);flex-shrink:0}
+.score-desc{flex:1;font-size:12px;color:var(--textM);line-height:1.4}
+.score-wrap{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.score-of{font-size:13px;color:var(--textM);font-weight:600}
+.total-block{background:var(--navy);border-radius:var(--rL);padding:17px 19px;display:flex;align-items:center;justify-content:space-between}
+.total-label{font-size:11px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.6px;font-weight:600}
+.total-sub{font-size:11.5px;color:rgba(255,255,255,.32);margin-top:3px}
+.total-val{font-size:32px;font-weight:800;color:#fff;line-height:1;letter-spacing:-1px}
+.total-pct{font-size:18px;font-weight:700;color:rgba(255,255,255,.6);margin-left:7px}
+.feedback-textarea{width:100%;min-height:74px;border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;font-size:13px;font-family:inherit;color:var(--text);resize:vertical;outline:none;transition:border-color .14s;background:var(--bg);line-height:1.5}
+.feedback-textarea:focus{border-color:var(--blue);background:#fff}
+
+/* Suggest-marks AI panel (purple) */
+.ai-panel{background:linear-gradient(180deg,#FBFAFF,#F7F5FF);border:1px solid var(--purpleM);border-radius:var(--rL);overflow:hidden}
+.ai-head{padding:12px 15px;display:flex;align-items:center;gap:9px;border-bottom:1px solid var(--purpleM);cursor:pointer}
+.ai-icon{width:26px;height:26px;border-radius:7px;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.ai-title{font-size:12.5px;font-weight:700;color:var(--purple)}
+.ai-tag{font-size:9.5px;font-weight:600;color:var(--purple);background:var(--purpleM);padding:1px 7px;border-radius:8px;letter-spacing:.3px;text-transform:uppercase}
+.ai-toggle{margin-left:auto;display:flex;align-items:center;gap:7px;font-size:11px;color:var(--textM)}
+.ai-switch{width:32px;height:18px;background:var(--purple);border-radius:10px;position:relative;cursor:pointer;flex-shrink:0}
+.ai-switch::after{content:'';position:absolute;width:14px;height:14px;background:#fff;border-radius:50%;top:2px;right:2px;transition:all .18s}
+.ai-switch.off{background:var(--borderM)}
+.ai-switch.off::after{right:auto;left:2px}
+.ai-body{padding:13px 15px}
+.ai-disclaimer{font-size:11px;color:var(--purple);background:rgba(124,58,237,.06);border-radius:7px;padding:8px 10px;margin-bottom:12px;line-height:1.5;display:flex;gap:7px}
+.ai-q-block{padding:10px 0;border-bottom:1px solid var(--purpleM)}
+.ai-q-block:last-child{border-bottom:none;padding-bottom:0}
+.ai-q-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
+.ai-q-label{font-size:12px;font-weight:700;color:var(--navy)}
+.ai-q-range{font-size:12px;font-weight:700;color:var(--purple);background:#fff;border:1px solid var(--purpleM);padding:2px 10px;border-radius:12px}
+.ai-q-note{font-size:11.5px;color:var(--textM);line-height:1.55}
+.ai-disabled-state{padding:24px 16px;text-align:center;color:var(--textQ);font-size:12.5px;line-height:1.6}
+
+/* status pills inline */
+.status-pills{display:flex;gap:7px;margin-top:9px;flex-wrap:wrap}
+
+/* ════ MODERATION COMPARISON ════ */
+.compare-tbl{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:var(--rL);overflow:hidden}
+.compare-tbl th{background:var(--bg);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--textM);padding:12px 14px;text-align:left;border-bottom:1px solid var(--border)}
+.compare-tbl th.col-you{color:var(--blue)}
+.compare-tbl th.col-them{color:var(--purple)}
+.compare-tbl td{padding:13px 14px;border-bottom:1px solid var(--borderL);font-size:13.5px;vertical-align:middle}
+.compare-tbl tr:last-child td{border-bottom:none}
+.cmp-mark{font-weight:700;font-variant-numeric:tabular-nums;font-size:15px}
+.cmp-mark.you{color:var(--blue)}
+.cmp-mark.them{color:var(--purple)}
+.cmp-diff{display:inline-flex;align-items:center;justify-content:center;min-width:34px;padding:2px 8px;border-radius:12px;font-size:12px;font-weight:700}
+.cmp-diff.ok{background:var(--greenL);color:var(--green)}
+.cmp-diff.flag{background:var(--redL);color:var(--red)}
+.cmp-diff.zero{background:#F1F5F9;color:var(--textQ)}
+.cmp-row-flagged{background:var(--redL)!important}
+.cmp-row-flagged td{background:transparent}
+.reconcile-opts{display:flex;gap:5px}
+.rec-btn{padding:4px 9px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--textM);transition:all .12s}
+.rec-btn:hover{border-color:var(--blue);color:var(--blue)}
+.rec-btn.chosen{background:var(--blue);color:#fff;border-color:var(--blue)}
+.agree-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:20px}
+.agree-stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--rL);padding:15px 17px;text-align:center}
+.agree-stat-n{font-size:26px;font-weight:800;line-height:1;letter-spacing:-.5px}
+.agree-stat-l{font-size:11.5px;color:var(--textM);margin-top:6px;font-weight:500}
+.comment-thread{background:var(--bg);border-radius:9px;padding:12px 14px;margin-top:10px}
+.comment{display:flex;gap:10px;margin-bottom:11px}
+.comment:last-child{margin-bottom:0}
+.comment-av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;flex-shrink:0;color:#fff}
+.comment-av.you{background:var(--blue)}
+.comment-av.them{background:var(--purple)}
+.comment-bubble{flex:1}
+.comment-author{font-size:12px;font-weight:600;color:var(--text)}
+.comment-time{font-size:10.5px;color:var(--textQ);margin-left:6px;font-weight:400}
+.comment-text{font-size:12.5px;color:var(--textM);line-height:1.5;margin-top:2px}
+
+/* ════ COLLEAGUE VIEW (external, no login) ════ */
+#colleague-view{position:fixed;inset:0;background:var(--bg);z-index:300;display:none;flex-direction:column;overflow:hidden}
+#colleague-view.open{display:flex}
+.cv-banner{background:linear-gradient(90deg,#7C3AED,#9333EA);color:#fff;padding:9px 20px;display:flex;align-items:center;justify-content:space-between;font-size:12.5px;flex-shrink:0}
+.cv-banner strong{font-weight:700}
+.cv-back{background:rgba(255,255,255,.18);color:#fff;border:none;padding:6px 13px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer}
+.cv-back:hover{background:rgba(255,255,255,.28)}
+.cv-topbar{background:#fff;border-bottom:1px solid var(--border);padding:13px 24px;display:flex;align-items:center;gap:14px;flex-shrink:0}
+.cv-logo{font-size:18px;font-weight:800;color:var(--navy);letter-spacing:-.4px}
+.cv-context{flex:1;font-size:12.5px;color:var(--textM)}
+.cv-context b{color:var(--text)}
+.cv-secure{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--green);font-weight:600;background:var(--greenL);padding:5px 11px;border-radius:8px}
+.cv-body{flex:1;overflow:hidden;display:grid;grid-template-columns:1fr 380px;gap:0}
+.cv-paper-col{overflow-y:auto;padding:20px 24px;background:#F4F6FA}
+.cv-paper-sheet{background:#fff;padding:30px 36px;border-radius:6px;box-shadow:0 1px 8px rgba(16,32,64,.08);font-size:13px;line-height:1.85;color:#1A2436;position:relative;max-width:760px;margin:0 auto}
+.cv-watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-32deg);font-size:48px;font-weight:800;color:rgba(124,58,237,.06);pointer-events:none;white-space:nowrap;letter-spacing:2px}
+.cv-mark-col{background:#fff;border-left:1px solid var(--border);overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:13px}
+.cv-ask-card{background:var(--purpleL);border:1px solid var(--purpleM);border-radius:var(--rL);padding:14px 16px}
+.cv-ask-title{font-size:13px;font-weight:700;color:var(--purple);margin-bottom:4px}
+.cv-ask-text{font-size:12.5px;color:var(--textM);line-height:1.55}
+.pseudonym{display:inline-flex;align-items:center;gap:5px;background:#F1F5F9;color:var(--textM);font-size:11px;font-weight:600;padding:2px 9px;border-radius:12px}
+
+/* ════ AUTO TASK BUILDER ════ */
+.builder-layout{display:grid;grid-template-columns:380px 1fr;gap:20px;height:calc(100vh - var(--topbar) - var(--banner) - 92px)}
+.builder-form{background:var(--surface);border:1px solid var(--border);border-radius:var(--rL);padding:18px 20px;overflow-y:auto}
+.builder-output{background:var(--surface);border:1px solid var(--border);border-radius:var(--rL);overflow:hidden;display:flex;flex-direction:column}
+.builder-output-head{background:var(--bg);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:9px;flex-shrink:0}
+.builder-output-body{flex:1;overflow-y:auto;padding:22px 26px}
+.gen-placeholder{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--textQ);padding:40px}
+.gen-ico{width:56px;height:56px;border-radius:14px;background:var(--purpleL);color:var(--purple);display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:16px}
+
+/* ════ ARCHIVE / LEADERSHIP ════ */
+.lead-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:24px}
+.archive-tbl-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--rL);overflow:hidden}
+
+/* Export cover preview */
+.cover-preview{background:#fff;border:1px solid var(--border);border-radius:8px;padding:26px 30px;font-size:12px;color:var(--text);box-shadow:var(--shadow)}
+.cover-logo{font-size:15px;font-weight:800;color:var(--navy);text-align:center;padding-bottom:14px;border-bottom:2px solid var(--navy);margin-bottom:16px}
+.cover-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed var(--border);font-size:11.5px}
+.cover-row .k{color:var(--textM)}
+.cover-row .v{font-weight:600;color:var(--text)}
+.cover-marks-tbl{width:100%;border-collapse:collapse;margin:12px 0}
+.cover-marks-tbl td,.cover-marks-tbl th{padding:5px 8px;font-size:11px;border:1px solid var(--border);text-align:left}
+.cover-marks-tbl th{background:var(--bg);font-weight:700}
+
+/* toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--navy);color:#fff;padding:13px 22px;border-radius:11px;font-size:13.5px;font-weight:500;box-shadow:var(--shadowXL);z-index:400;opacity:0;transition:all .35s cubic-bezier(.2,.9,.3,1.1);display:flex;align-items:center;gap:10px}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.toast .tcheck{width:22px;height:22px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+
+/* success state for forms */
+.success-state{text-align:center;padding:18px 10px}
+.success-ico{width:62px;height:62px;border-radius:50%;background:var(--greenL);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 16px}
+
+/* responsive */
+@media(max-width:1100px){
+  .metrics{grid-template-columns:repeat(3,1fr)}
+  .marking-layout,.cv-body,.builder-layout{grid-template-columns:1fr}
+  .board{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+  <!-- ════ SIDEBAR ════ -->
+  <aside id="sidebar">
+    <div class="sb-logo">
+      <span class="sb-logo-text">Moderato</span><span class="sb-vce">VCE</span>
+    </div>
+    <nav class="sb-nav">
+      <div class="sb-section">Workspace</div>
+      <div class="nav-item active" id="nav-home" onclick="go('home')"><span class="nav-icon">⊞</span> Home</div>
+      <div class="nav-item" id="nav-tasks" onclick="go('tasks')"><span class="nav-icon">✎</span> Tasks <span class="nav-badge">4</span></div>
+      <div class="nav-item" id="nav-cross" onclick="go('cross')"><span class="nav-icon">⇌</span> Cross-marking <span class="nav-badge">1</span></div>
+      <div class="nav-item" id="nav-builder" onclick="go('builder')"><span class="nav-icon">✦</span> Auto Task Builder</div>
+      <div class="sb-section">School</div>
+      <div class="nav-item" id="nav-archive" onclick="go('archive')"><span class="nav-icon">🗄</span> Archive &amp; Audit</div>
+      <div class="nav-item locked"><span class="nav-icon">◷</span> Benchmarking <span class="nav-soon">PHASE 4</span></div>
+      <div class="nav-item" id="nav-settings" onclick="go('settings')"><span class="nav-icon">⚙</span> Settings</div>
+    </nav>
+    <div class="sb-user" onclick="go('settings')">
+      <div class="sb-avatar">MC</div>
+      <div>
+        <div class="sb-name">Marcus Chen</div>
+        <div class="sb-school">Southvale Secondary College</div>
+        <div class="sb-role-switch">Teacher · switch role ▾</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ════ MAIN ════ -->
+  <main id="main">
+    <div id="demo-banner">
+      <span class="banner-text"><span class="banner-tag">Demo</span><strong>Interactive product demo</strong> — every screen is clickable. Running on sample data.</span>
+      <span class="banner-text" style="opacity:.8">Built by a practising VCE teacher</span>
+    </div>
+
+    <div id="topbar">
+      <div id="breadcrumb" class="breadcrumb"><span class="cur">Home</span></div>
+      <div class="topbar-right">
+        <div class="topbar-search">⌕ <span>Search tasks, students…</span></div>
+        <button class="cta-access" onclick="openAccess()"><span class="pulse"></span>Request early access</button>
+      </div>
+    </div>
+
+    <div id="pages">
+
+      <!-- ═══════════════ HOME ═══════════════ -->
+      <div id="page-home" class="page active">
+        <div class="page-title">Good morning, Marcus.</div>
+        <div class="page-sub">VCE Business Management · Term 2, Week 8 · Southvale Secondary College</div>
+
+        <div class="metrics">
+          <div class="metric" onclick="go('tasks')"><div class="metric-n urg">4</div><div class="metric-l">Papers to mark</div></div>
+          <div class="metric" onclick="go('tasks')"><div class="metric-n urg">2</div><div class="metric-l">Tasks due this week</div></div>
+          <div class="metric" onclick="go('cross')"><div class="metric-n bl">1</div><div class="metric-l">Awaiting moderation</div></div>
+          <div class="metric" onclick="go('cross')"><div class="metric-n bl">1</div><div class="metric-l">Moderation requests</div></div>
+          <div class="metric"><div class="metric-n nt">0</div><div class="metric-l">Submissions missing</div></div>
+          <div class="metric"><div class="metric-n gd">2.4h</div><div class="metric-l">Marking time saved</div></div>
+        </div>
+
+        <div class="board">
+          <div>
+            <div class="section-head">Active tasks <span class="s-count">2</span><span class="section-action" onclick="go('tasks')">View all tasks →</span></div>
+
+            <div class="task-card" onclick="openTaskDetail()">
+              <div class="tc-top">
+                <div>
+                  <div class="tc-name">SAC 1 — Operations Management</div>
+                  <div class="tc-sub">VCE Business Management U3&amp;4 · Class A · Due 24 Jun 2026</div>
+                </div>
+                <div class="tc-tags"><span class="badge badge-amber"><span class="badge-dot"></span>Marking</span></div>
+              </div>
+              <div class="progress"><div class="progress-fill" style="width:20%;background:var(--blue)"></div></div>
+              <div class="tc-meta"><span><b>1</b> / 5 marked</span><span><b>4</b> remaining</span><span>30 marks total</span><span>Outcome 3</span></div>
+            </div>
+
+            <div class="task-card" onclick="openTaskDetail()">
+              <div class="tc-top">
+                <div>
+                  <div class="tc-name">Unit 2 Practice Task — Human Resource Management</div>
+                  <div class="tc-sub">VCE Business Management U1&amp;2 · Class B · Due 20 Jun 2026</div>
+                </div>
+                <div class="tc-tags"><span class="badge badge-grey">Not started</span></div>
+              </div>
+              <div class="progress"><div class="progress-fill" style="width:0%;background:var(--blue)"></div></div>
+              <div class="tc-meta"><span><b>0</b> / 18 marked</span><span>40 marks total</span><span>Formative</span></div>
+            </div>
+
+            <div class="section-head mt">Past tasks <span class="s-count">1</span></div>
+            <div class="task-card" onclick="go('cross')">
+              <div class="tc-top">
+                <div>
+                  <div class="tc-name">Unit 1 SAC — Business Foundations</div>
+                  <div class="tc-sub">VCE Business Management U1&amp;2 · Class A + B · 3 May 2026</div>
+                </div>
+                <div class="tc-tags"><span class="badge badge-green"><span class="badge-dot"></span>Moderated</span></div>
+              </div>
+              <div class="progress"><div class="progress-fill" style="width:100%;background:var(--green)"></div></div>
+              <div class="tc-meta"><span><b>36</b> / 36 marked</span><span>89% marker agreement</span><span>Exported 5 May</span></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="section-head">Notifications</div>
+            <div class="notif">
+              <div class="notif-ico green">↩</div>
+              <div><div class="notif-title">Moderation returned</div><div class="notif-sub">Sarah Vukovic returned marks for Unit 1 SAC · 2 hrs ago</div></div>
+            </div>
+            <div class="notif">
+              <div class="notif-ico amber">⇌</div>
+              <div><div class="notif-title">Moderation request</div><div class="notif-sub">David Okafor asked you to cross-mark 4 papers · 4 hrs ago</div></div>
+            </div>
+            <div class="notif">
+              <div class="notif-ico blue">⤓</div>
+              <div><div class="notif-title">New submission uploaded</div><div class="notif-sub">James Kowalski · SAC 1 Operations · 9 Jun 2026</div></div>
+            </div>
+            <div class="notif">
+              <div class="notif-ico green">✓</div>
+              <div><div class="notif-title">Export complete</div><div class="notif-sub">36 papers exported as PDF · Unit 1 SAC · 5 May 2026</div></div>
+            </div>
+
+            <div class="card" style="margin-top:18px;background:var(--blueXL);border-color:var(--blueM)">
+              <div style="font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:6px">This term so far</div>
+              <div class="flex between" style="font-size:12px;padding:4px 0"><span class="muted">Tasks marked</span><b>3</b></div>
+              <div class="flex between" style="font-size:12px;padding:4px 0"><span class="muted">Papers cross-marked</span><b>41</b></div>
+              <div class="flex between" style="font-size:12px;padding:4px 0"><span class="muted">Avg marker agreement</span><b style="color:var(--green)">91%</b></div>
+              <div class="flex between" style="font-size:12px;padding:4px 0"><span class="muted">Est. time saved</span><b style="color:var(--green)">14.2 hrs</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════ TASKS LIST ═══════════════ -->
+      <div id="page-tasks" class="page">
+        <div class="page-head-row">
+          <div>
+            <div class="page-title">Tasks</div>
+            <div class="page-sub">Every assessment across your teaching load — formative and summative, all subjects and units.</div>
+          </div>
+          <button class="btn btn-primary" onclick="openCreateTask()">+ Create task</button>
+        </div>
+
+        <div class="filter-bar">
+          <span class="chip active">All <span class="chip-count">6</span></span>
+          <span class="chip">BM U3&amp;4 <span class="chip-count">3</span></span>
+          <span class="chip">BM U1&amp;2 <span class="chip-count">3</span></span>
+          <span class="chip">Summative <span class="chip-count">4</span></span>
+          <span class="chip">Formative <span class="chip-count">2</span></span>
+          <span style="margin-left:auto;font-size:12px;color:var(--textQ)">Showing your ticked offerings · <span style="color:var(--blue);cursor:pointer">edit offerings</span></span>
+        </div>
+
+        <table class="tbl">
+          <thead><tr><th>Assessment</th><th>Course · Unit</th><th>Class</th><th>Type</th><th>Due</th><th>Progress</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr class="clickable" onclick="openTaskDetail()">
+              <td class="td-name">SAC 1 — Operations Management</td>
+              <td class="muted small">BM · Unit 3&amp;4</td>
+              <td class="small">Class A</td>
+              <td><span class="badge badge-blue">Summative</span></td>
+              <td class="small">24 Jun</td>
+              <td class="small td-mut">1 / 5 marked</td>
+              <td><span class="badge badge-amber"><span class="badge-dot"></span>Marking</span></td>
+            </tr>
+            <tr class="clickable" onclick="openTaskDetail()">
+              <td class="td-name">Unit 2 Practice — HR Management</td>
+              <td class="muted small">BM · Unit 1&amp;2</td>
+              <td class="small">Class B</td>
+              <td><span class="badge badge-grey">Formative</span></td>
+              <td class="small">20 Jun</td>
+              <td class="small td-mut">0 / 18 marked</td>
+              <td><span class="badge badge-grey">Not started</span></td>
+            </tr>
+            <tr class="clickable" onclick="go('cross')">
+              <td class="td-name">Unit 1 SAC — Business Foundations</td>
+              <td class="muted small">BM · Unit 1&amp;2</td>
+              <td class="small">Class A + B</td>
+              <td><span class="badge badge-blue">Summative</span></td>
+              <td class="small">3 May</td>
+              <td class="small td-mut">36 / 36 marked</td>
+              <td><span class="badge badge-green"><span class="badge-dot"></span>Moderated</span></td>
+            </tr>
+            <tr class="clickable" onclick="openTaskDetail()">
+              <td class="td-name">SAC 2 — Managing Employees</td>
+              <td class="muted small">BM · Unit 3&amp;4</td>
+              <td class="small">Class A</td>
+              <td><span class="badge badge-blue">Summative</span></td>
+              <td class="small">8 Aug</td>
+              <td class="small td-mut">Not yet open</td>
+              <td><span class="badge badge-grey">Scheduled</span></td>
+            </tr>
+            <tr class="clickable" onclick="openTaskDetail()">
+              <td class="td-name">Case Study Analysis — Global Business</td>
+              <td class="muted small">BM · Unit 3&amp;4</td>
+              <td class="small">Class A</td>
+              <td><span class="badge badge-grey">Formative</span></td>
+              <td class="small">15 Jul</td>
+              <td class="small td-mut">Not yet open</td>
+              <td><span class="badge badge-grey">Scheduled</span></td>
+            </tr>
+            <tr class="clickable" onclick="go('cross')">
+              <td class="td-name">Unit 2 SAC — Marketing &amp; Public Relations</td>
+              <td class="muted small">BM · Unit 1&amp;2</td>
+              <td class="small">Class B</td>
+              <td><span class="badge badge-blue">Summative</span></td>
+              <td class="small">28 Apr</td>
+              <td class="small td-mut">22 / 22 marked</td>
+              <td><span class="badge badge-green"><span class="badge-dot"></span>Moderated</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ═══════════════ TASK DETAIL / ROSTER ═══════════════ -->
+      <div id="page-taskdetail" class="page">
+        <div class="page-head-row">
+          <div>
+            <div class="page-title">SAC 1 — Operations Management</div>
+            <div class="page-sub mb0">VCE Business Management U3&amp;4 · Class A · Due 24 Jun 2026 · 30 marks</div>
+            <div class="status-pills"><span class="badge badge-amber"><span class="badge-dot"></span>Marking in progress</span><span class="badge badge-grey">Not yet moderated</span><span class="badge badge-blue">Outcome 3 — Operations management</span></div>
+          </div>
+          <div class="flex gap8">
+            <button class="btn btn-secondary btn-sm" onclick="openModeration()">⇌ Send for moderation</button>
+            <button class="btn btn-secondary btn-sm" onclick="openShare()">⧉ Share copy</button>
+            <button class="btn btn-secondary btn-sm" onclick="openExport()">⤓ Export</button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:18px;padding:14px 18px">
+          <div class="flex between items-center" style="flex-wrap:wrap;gap:14px">
+            <div style="display:flex;gap:28px;flex-wrap:wrap">
+              <div><div class="small muted" style="font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:.5px">Questions</div><div style="font-size:13px;font-weight:600;margin-top:2px">Q1 (4) · Q2 (6) · Q3 (8) · Q4 (12)</div></div>
+              <div><div class="small muted" style="font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:.5px">Class size</div><div style="font-size:13px;font-weight:600;margin-top:2px">5 students</div></div>
+              <div><div class="small muted" style="font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:.5px">Marked</div><div style="font-size:13px;font-weight:600;margin-top:2px">1 of 5</div></div>
+              <div><div class="small muted" style="font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:.5px">Submissions</div><div style="font-size:13px;font-weight:600;margin-top:2px">5 of 5 uploaded</div></div>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="toast('Roster import — paste or upload a CSV of student names')">+ Import roster (CSV)</button>
+          </div>
+        </div>
+
+        <table class="tbl">
+          <thead><tr><th>Student</th><th>Submission</th><th>Q1<span class="td-mut" style="font-weight:400">/4</span></th><th>Q2<span class="td-mut" style="font-weight:400">/6</span></th><th>Q3<span class="td-mut" style="font-weight:400">/8</span></th><th>Q4<span class="td-mut" style="font-weight:400">/12</span></th><th>Total</th><th>%</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="td-name"><span class="avatar-sm">PS</span>Priya Sharma</td>
+              <td><span class="badge badge-green">Submitted</span></td>
+              <td class="td-score">3</td><td class="td-score">5</td><td class="td-score">6</td><td class="td-score">8</td>
+              <td class="td-total">22</td><td class="td-pct">73%</td>
+              <td><span class="badge badge-green"><span class="badge-dot"></span>Marked</span></td>
+              <td><button class="btn btn-ghost btn-sm" onclick="openMarking()">View</button></td>
+            </tr>
+            <tr class="clickable" onclick="openMarking()">
+              <td class="td-name"><span class="avatar-sm">JK</span>James Kowalski</td>
+              <td><span class="badge badge-green">Submitted</span></td>
+              <td class="td-mut">—</td><td class="td-mut">—</td><td class="td-mut">—</td><td class="td-mut">—</td>
+              <td class="td-mut">—</td><td class="td-mut">—</td>
+              <td><span class="badge badge-amber"><span class="badge-dot"></span>To mark</span></td>
+              <td><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openMarking()">Mark →</button></td>
+            </tr>
+            <tr class="clickable" onclick="openMarking()">
+              <td class="td-name"><span class="avatar-sm">AN</span>Anh Nguyen</td>
+              <td><span class="badge badge-green">Submitted</span></td>
+              <td class="td-mut">—</td><td class="td-mut">—</td><td class="td-mut">—</td><td class="td-mut">—</td>
+              <td class="td-mut">—</td><td class="td-mut">—</td>
+              <td><span class="badge badge-grey">To mark</span></td>
+              <td><button class="btn btn-secondary btn-sm" onclick="event.stopPropagation();openMarking()">Mark</button></td>
+            </tr>
+            <tr class="clickable" onclick="openMarking()">
+              <td class="td-name"><span class="avatar-sm">SL</span>Sophie Lamont</td>
+              <td><span class="badge badge-green">Submitted</span></td>
+              <td class="td-mut">—</td><td class="td-mut">—</td><td class="td-mut">—</td><td class="td-mut">—</td>
+              <td class="td-mut">—</td><td class="td-mut">—</td>
+              <td><span class="badge badge-grey">To mark</span></td>
+              <td><button class="btn btn-secondary btn-sm" onclick="event.stopPropagation();openMarking()">Mark</button></td>
+            </tr>
+            <tr class="clickable" onclick="openMarking()">
+              <td class="td-name"><span class="avatar-sm">OP</span>Oscar Petrov</td>
+              <td><span class="badge badge-green">Submitted</span></td>
+              <td class="td-mut">—</td><td class="td-mut">—</td><td class="td-mut">—</td><td class="td-mut">—</td>
+              <td class="td-mut">—</td><td class="td-mut">—</td>
+              <td><span class="badge badge-grey">To mark</span></td>
+              <td><button class="btn btn-secondary btn-sm" onclick="event.stopPropagation();openMarking()">Mark</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="small muted mt12" style="display:flex;gap:8px;align-items:center"><span>↩ Every removal is a soft-delete with a warning — marks and moderation records are recoverable.</span></div>
+      </div>
+
+      <!-- ═══════════════ MARKING ═══════════════ -->
+      <div id="page-marking" class="page page-flush">
+        <div class="marking-layout">
+
+          <!-- Paper viewer with FULL SAC submission -->
+          <div class="paper-viewer">
+            <div class="paper-toolbar">
+              <span class="badge badge-blue">📄 Submission</span>
+              <span class="doc-name">James_Kowalski_SAC1_Operations.pdf · uploaded 9 Jun 2026</span>
+              <div class="paper-zoom">− <b style="color:var(--textM)">100%</b> + · ⤢</div>
+            </div>
+            <div class="paper-body">
+              <div class="paper-sheet">
+                <div class="paper-letterhead">
+                  <div class="paper-school">Southvale Secondary College</div>
+                  <div class="paper-course">VCE Business Management · Units 3 &amp; 4 · 2026</div>
+                  <div class="paper-task-title">School-Assessed Coursework 1 — Operations Management</div>
+                  <div class="paper-student-line">Student: James Kowalski · Class A · Outcome 3 · Total: 30 marks · Reading + writing time: 60 min</div>
+                </div>
+
+                <div class="paper-q">
+                  <div class="pq-head"><span class="pq-num">Question 1</span><span class="pq-marks-tag">4 marks</span></div>
+                  <div class="pq-prompt">Define operations management and outline its relationship to the achievement of business objectives.</div>
+                  <div class="pq-answer handwritten">
+                    <p>Operations management is the process of transforming inputs such as raw materials, labour and capital into finished outputs, being the goods and services a business sells. It includes planning, organising and controlling the activities involved in production.</p>
+                    <p>Operations management relates to business objectives because efficient operations lower the cost per unit and reduce waste, which helps a business achieve objectives such as making a profit and increasing market share. For example, a manufacturer that runs its operations efficiently can sell at a competitive price while still earning a healthy margin.</p>
+                  </div>
+                </div>
+
+                <div class="paper-q">
+                  <div class="pq-head"><span class="pq-num">Question 2</span><span class="pq-marks-tag">6 marks</span></div>
+                  <div class="pq-prompt">Explain two technological strategies a manufacturing business could implement to improve the efficiency and effectiveness of its operations.</div>
+                  <div class="pq-answer handwritten">
+                    <p>One technological strategy is the use of <u>robotics</u> on automated production lines. Robotics improve efficiency because they operate continuously without breaks and produce output faster and more consistently than human workers, reducing the time taken per unit. They improve effectiveness by reducing human error, leading to more consistent product quality.</p>
+                    <p>A second strategy is <u>artificial intelligence (AI)</u> used for demand forecasting and quality inspection. AI analyses large volumes of data to predict demand more accurately, reducing overproduction and waste (efficiency). AI-powered machine vision can also detect defects faster and more reliably than manual inspection, improving the effectiveness of quality control.</p>
+                  </div>
+                </div>
+
+                <div class="paper-q">
+                  <div class="pq-head"><span class="pq-num">Question 3</span><span class="pq-marks-tag">8 marks</span></div>
+                  <div class="pq-prompt">Analyse how a materials strategy and a waste minimisation strategy could be used together to improve the operations of a manufacturing business.</div>
+                  <div class="pq-answer handwritten">
+                    <p>A materials strategy such as <u>Just In Time (JIT)</u> involves ordering and receiving materials only as they are needed in production. This improves operations by reducing the level of inventory held, lowering storage and holding costs and freeing up working capital. Because materials arrive only as required, there is less risk of stock becoming obsolete. However, JIT relies heavily on reliable suppliers — any delivery delay can halt production entirely.</p>
+                    <p>A waste minimisation strategy such as <u>lean management</u> focuses on eliminating all forms of waste — overproduction, waiting, excess motion and defects. Removing activities that do not add value improves efficiency and lowers cost, and the continuous-improvement (kaizen) culture keeps employees involved in finding ongoing efficiencies.</p>
+                    <p>Used together, the two strategies complement each other: JIT attacks inventory waste while lean management attacks process waste, producing a leaner, lower-cost operation overall. The main limitation is that both depend on supplier reliability and a significant cultural shift to work effectively.</p>
+                  </div>
+                </div>
+
+                <div class="paper-q">
+                  <div class="pq-head"><span class="pq-num">Question 4</span><span class="pq-marks-tag">12 marks</span></div>
+                  <div class="pq-prompt">Evaluate the effectiveness of Total Quality Management (TQM) as a strategy to improve the operations of a business. In your response, refer to a relevant business.</div>
+                  <div class="pq-answer handwritten">
+                    <p>Total Quality Management (TQM) is a quality strategy in which every employee, across all areas of the business, takes responsibility for maintaining and improving quality, with a continuous focus on meeting customer needs.</p>
+                    <p>A key strength of TQM is that it builds quality into every stage of production rather than relying on inspection at the end. This reduces defects and the costs of waste and rework. Because it involves all staff, it can also lift motivation and engagement, as workers feel ownership over quality. Over the long term, consistently high quality strengthens reputation and customer loyalty — supporting objectives such as growing market share. Toyota's use of TQM principles, for instance, has helped it build a global reputation for reliability.</p>
+                    <p>However, TQM has real limitations. It is resource-intensive, requiring significant investment in staff training and a cultural shift across the whole organisation, which is costly and slow. The benefits are mostly long-term, which can frustrate managers seeking immediate gains, and it depends on sustained commitment from leadership — if that wavers, the strategy is unlikely to succeed.</p>
+                    <p>Overall, TQM can be a highly effective operations strategy, particularly for businesses competing on quality and pursuing long-term improvement. Its effectiveness, though, depends on adequate resourcing, sustained commitment and a willingness to invest in cultural change. For a business chasing short-term cost cuts, a more targeted strategy may be more appropriate.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scoring column -->
+          <div class="scoring-col">
+            <div class="mark-student-card">
+              <div class="flex between items-center">
+                <div>
+                  <div class="mark-student-name">James Kowalski</div>
+                  <div class="mark-student-meta">SAC 1 — Operations Management · Class A · Paper 2 of 5</div>
+                </div>
+                <div class="flex gap8">
+                  <button class="btn btn-ghost btn-sm" title="Previous">‹</button>
+                  <button class="btn btn-ghost btn-sm" title="Next">›</button>
+                </div>
+              </div>
+              <div class="status-pills"><span class="badge badge-amber"><span class="badge-dot"></span>To mark</span><span class="badge badge-grey">Not moderated</span></div>
+            </div>
+
+            <!-- Suggest marks AI panel -->
+            <div class="ai-panel">
+              <div class="ai-head" onclick="toggleAI()">
+                <div class="ai-icon">✦</div>
+                <div><div class="ai-title">Suggest marks &amp; feedback</div></div>
+                <span class="ai-tag">Advisory</span>
+                <div class="ai-toggle"><span id="ai-state-label">On</span><div class="ai-switch" id="ai-switch" onclick="event.stopPropagation();toggleAI()"></div></div>
+              </div>
+              <div class="ai-body" id="ai-body">
+                <div class="ai-disclaimer"><span>ℹ</span><span>These are suggestions only. Moderato never fills in marks for you — you remain the assessor of record. Insights are aligned to the VCE Study Design outcomes. Disable any time.</span></div>
+                <div class="ai-q-block">
+                  <div class="ai-q-row"><span class="ai-q-label">Q1 · Define + relationship</span><span class="ai-q-range">3 – 4 / 4</span></div>
+                  <div class="ai-q-note">Clear definition with inputs/transformation/outputs. Links to objectives (profit, market share) with an example. Fully addresses both parts of the prompt.</div>
+                </div>
+                <div class="ai-q-block">
+                  <div class="ai-q-row"><span class="ai-q-label">Q2 · Two tech strategies</span><span class="ai-q-range">5 – 6 / 6</span></div>
+                  <div class="ai-q-note">Two distinct strategies (robotics, AI), each explained against both efficiency <em>and</em> effectiveness. Well-structured "explain" response.</div>
+                </div>
+                <div class="ai-q-block">
+                  <div class="ai-q-row"><span class="ai-q-label">Q3 · Materials + waste</span><span class="ai-q-range">5 – 7 / 8</span></div>
+                  <div class="ai-q-note">Strong analysis of JIT and lean, with how they interrelate. Limitation noted. Could push further on a specific business context to reach the top band.</div>
+                </div>
+                <div class="ai-q-block">
+                  <div class="ai-q-row"><span class="ai-q-label">Q4 · Evaluate TQM</span><span class="ai-q-range">8 – 10 / 12</span></div>
+                  <div class="ai-q-note">Balanced evaluation: strengths, limitations, and a justified conclusion. Business reference (Toyota) present but brief — deeper application would lift it toward full marks.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Per-question scoring -->
+            <div class="panel-card">
+              <div class="panel-title">Your marks <span style="margin-left:auto;font-weight:400;text-transform:none;letter-spacing:0;color:var(--textQ)">you enter these</span></div>
+              <div class="score-row">
+                <div class="score-q">Q1</div><div class="score-desc">Define operations management + relationship to objectives</div>
+                <div class="score-wrap"><input class="score-input" id="q1" type="number" min="0" max="4" placeholder="—" oninput="updateTotal()" onblur="styleInput(this)" aria-label="Q1 out of 4"><span class="score-of">/ 4</span></div>
+              </div>
+              <div class="score-row">
+                <div class="score-q">Q2</div><div class="score-desc">Two technological strategies explained</div>
+                <div class="score-wrap"><input class="score-input" id="q2" type="number" min="0" max="6" placeholder="—" oninput="updateTotal()" onblur="styleInput(this)" aria-label="Q2 out of 6"><span class="score-of">/ 6</span></div>
+              </div>
+              <div class="score-row">
+                <div class="score-q">Q3</div><div class="score-desc">Materials + waste minimisation analysis</div>
+                <div class="score-wrap"><input class="score-input" id="q3" type="number" min="0" max="8" placeholder="—" oninput="updateTotal()" onblur="styleInput(this)" aria-label="Q3 out of 8"><span class="score-of">/ 8</span></div>
+              </div>
+              <div class="score-row">
+                <div class="score-q">Q4</div><div class="score-desc">Evaluate TQM with business reference</div>
+                <div class="score-wrap"><input class="score-input" id="q4" type="number" min="0" max="12" placeholder="—" oninput="updateTotal()" onblur="styleInput(this)" aria-label="Q4 out of 12"><span class="score-of">/ 12</span></div>
+              </div>
+            </div>
+
+            <div class="total-block">
+              <div><div class="total-label">Total mark</div><div class="total-sub">out of 30</div></div>
+              <div style="display:flex;align-items:baseline"><span class="total-val" id="total-display">—</span><span class="total-pct" id="pct-display"></span></div>
+            </div>
+
+            <div class="panel-card">
+              <div class="panel-title">Overall feedback <span style="margin-left:auto;font-weight:400;text-transform:none;letter-spacing:0;color:var(--textQ)">optional</span></div>
+              <textarea class="feedback-textarea" placeholder="Add written feedback for James…" aria-label="Overall feedback"></textarea>
+            </div>
+
+            <div class="flex" style="flex-direction:column;gap:9px;padding-bottom:8px">
+              <button class="btn btn-primary btn-block" id="complete-btn" onclick="completeMarking()">✓ Mark complete</button>
+              <button class="btn btn-secondary btn-block" onclick="openModeration()">⇌ Send for cross-marking</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════ CROSS-MARKING HUB ═══════════════ -->
+      <div id="page-cross" class="page">
+        <div class="page-title">Cross-marking</div>
+        <div class="page-sub">Structured peer moderation — explicit standards, student-work evidence, and consensus between markers. This is where comparable judgement data accrues.</div>
+
+        <div class="agree-summary">
+          <div class="agree-stat"><div class="agree-stat-n" style="color:var(--green)">91%</div><div class="agree-stat-l">Avg marker agreement this term</div></div>
+          <div class="agree-stat"><div class="agree-stat-n" style="color:var(--blue)">41</div><div class="agree-stat-l">Papers cross-marked</div></div>
+          <div class="agree-stat"><div class="agree-stat-n" style="color:var(--navy)">0.7</div><div class="agree-stat-l">Mean mark discrepancy</div></div>
+        </div>
+
+        <div class="section-head">Needs your attention <span class="s-count">2</span></div>
+
+        <div class="task-card" style="border-left:3px solid var(--green);border-radius:0 var(--rL) var(--rL) 0" onclick="openModerationResults()">
+          <div class="tc-top">
+            <div><div class="tc-name">Unit 1 SAC — Business Foundations <span class="badge badge-green" style="margin-left:8px">↩ Returned</span></div>
+            <div class="tc-sub">Sarah Vukovic returned your cross-marking request · 2 hrs ago</div></div>
+            <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openModerationResults()">Review comparison →</button>
+          </div>
+          <div style="background:var(--greenL);border-radius:8px;padding:10px 13px;margin-top:10px;font-size:12.5px;color:var(--green)"><b>89% agreement</b> <span style="color:var(--textM)">· mean discrepancy 0.8 marks · </span><span style="color:var(--red);font-weight:600">2 questions flagged for reconciliation</span></div>
+        </div>
+
+        <div class="task-card" style="border-left:3px solid var(--amber);border-radius:0 var(--rL) var(--rL) 0" onclick="openColleague()">
+          <div class="tc-top">
+            <div><div class="tc-name">Incoming request from David Okafor <span class="badge badge-amber" style="margin-left:8px">Action needed</span></div>
+            <div class="tc-sub">David (Eastgate College) asked you to blind cross-mark 4 papers · Unit 3 SAC</div></div>
+            <button class="btn btn-secondary btn-sm" onclick="event.stopPropagation();openColleague()">Open colleague view →</button>
+          </div>
+          <div class="small muted mt8">↗ This is how the no-sign-up moderation link works — opens the pseudonymised paper view a colleague sees.</div>
+        </div>
+
+        <div class="section-head mt">Start a new moderation round</div>
+        <div class="task-card" onclick="openModeration()">
+          <div class="tc-top">
+            <div><div class="tc-name">SAC 1 — Operations Management</div><div class="tc-sub">1 of 5 marked · select papers and send to a colleague</div></div>
+            <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openModeration()">⇌ Send for moderation</button>
+          </div>
+        </div>
+        <div class="task-card" onclick="openModeration()">
+          <div class="tc-top">
+            <div><div class="tc-name">Unit 2 SAC — Marketing &amp; Public Relations</div><div class="tc-sub">22 of 22 marked · ready for a full moderation round</div></div>
+            <button class="btn btn-secondary btn-sm" onclick="event.stopPropagation();openModeration()">⇌ Send for moderation</button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:22px;background:var(--blueXL);border-color:var(--blueM)">
+          <div style="font-size:13.5px;font-weight:700;color:var(--navy);margin-bottom:12px">How cross-marking works</div>
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px">
+            <div><div style="width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:8px">1</div><div style="font-size:12px;color:var(--textM);line-height:1.5">Pick a task and select papers to moderate.</div></div>
+            <div><div style="width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:8px">2</div><div style="font-size:12px;color:var(--textM);line-height:1.5">Choose blind cross-marking or please-moderate.</div></div>
+            <div><div style="width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:8px">3</div><div style="font-size:12px;color:var(--textM);line-height:1.5">Colleague gets a secure link — <b>no sign-up.</b></div></div>
+            <div><div style="width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:8px">4</div><div style="font-size:12px;color:var(--textM);line-height:1.5">Marks return side-by-side; discrepancies auto-flagged.</div></div>
+            <div><div style="width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:8px">5</div><div style="font-size:12px;color:var(--textM);line-height:1.5">Reconcile to agreed finals; full audit trail saved.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════ MODERATION RESULTS (OWNER VIEW) ═══════════════ -->
+      <div id="page-modresults" class="page">
+        <div class="page-head-row">
+          <div>
+            <div class="page-title">Moderation comparison — Unit 1 SAC</div>
+            <div class="page-sub mb0">Your marks vs Sarah Vukovic · Business Foundations · 3 papers in this round</div>
+          </div>
+          <button class="btn btn-success btn-sm" onclick="toast('Agreed final marks saved · audit trail updated')">✓ Save agreed finals</button>
+        </div>
+
+        <div class="agree-summary">
+          <div class="agree-stat"><div class="agree-stat-n" style="color:var(--green)">89%</div><div class="agree-stat-l">Overall agreement rate</div></div>
+          <div class="agree-stat"><div class="agree-stat-n" style="color:var(--navy)">0.8</div><div class="agree-stat-l">Mean mark difference</div></div>
+          <div class="agree-stat"><div class="agree-stat-n" style="color:var(--red)">2</div><div class="agree-stat-l">Questions flagged (&gt; 2 marks apart)</div></div>
+        </div>
+
+        <div class="panel-card" style="margin-bottom:18px">
+          <div class="flex between items-center" style="margin-bottom:6px">
+            <div style="font-size:14px;font-weight:700;color:var(--navy)"><span class="avatar-sm">PS</span>Priya Sharma — per-question comparison</div>
+            <span class="badge badge-amber">Discrepancy threshold: 2 marks</span>
+          </div>
+          <table class="compare-tbl" style="margin-top:10px">
+            <thead><tr><th style="width:34%">Question</th><th class="col-you">Your mark</th><th class="col-them">Sarah's mark</th><th>Difference</th><th style="width:30%">Reconcile to</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><b>Q1</b> <span class="muted small">Business foundations</span></td>
+                <td><span class="cmp-mark you">4</span> <span class="muted small">/ 4</span></td>
+                <td><span class="cmp-mark them">4</span> <span class="muted small">/ 4</span></td>
+                <td><span class="cmp-diff zero">0</span></td>
+                <td><span class="badge badge-green">Agreed · 4</span></td>
+              </tr>
+              <tr class="cmp-row-flagged">
+                <td><b>Q2</b> <span class="muted small">Stakeholders</span></td>
+                <td><span class="cmp-mark you">8</span> <span class="muted small">/ 10</span></td>
+                <td><span class="cmp-mark them">5</span> <span class="muted small">/ 10</span></td>
+                <td><span class="cmp-diff flag">3 ▲</span></td>
+                <td><div class="reconcile-opts"><span class="rec-btn">Mine</span><span class="rec-btn">Theirs</span><span class="rec-btn chosen">Avg · 6.5</span><span class="rec-btn">Set</span></div></td>
+              </tr>
+              <tr>
+                <td><b>Q3</b> <span class="muted small">Management styles</span></td>
+                <td><span class="cmp-mark you">9</span> <span class="muted small">/ 10</span></td>
+                <td><span class="cmp-mark them">10</span> <span class="muted small">/ 10</span></td>
+                <td><span class="cmp-diff ok">1</span></td>
+                <td><span class="badge badge-green">Agreed · 10</span></td>
+              </tr>
+              <tr class="cmp-row-flagged">
+                <td><b>Q4</b> <span class="muted small">Evaluate corporate culture</span></td>
+                <td><span class="cmp-mark you">12</span> <span class="muted small">/ 16</span></td>
+                <td><span class="cmp-mark them">15</span> <span class="muted small">/ 16</span></td>
+                <td><span class="cmp-diff flag">3 ▼</span></td>
+                <td><div class="reconcile-opts"><span class="rec-btn">Mine</span><span class="rec-btn chosen">Theirs</span><span class="rec-btn">Avg</span><span class="rec-btn">Set</span></div></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="comment-thread">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--textM);margin-bottom:10px">Discussion — reasons behind discrepancies</div>
+            <div class="comment">
+              <div class="comment-av them">SV</div>
+              <div class="comment-bubble"><div><span class="comment-author">Sarah Vukovic</span><span class="comment-time">on Q2 · 2 hrs ago</span></div><div class="comment-text">I marked this lower — the response lists stakeholders but doesn't analyse competing interests, which the criteria require for the top band.</div></div>
+            </div>
+            <div class="comment">
+              <div class="comment-av you">MC</div>
+              <div class="comment-bubble"><div><span class="comment-author">You</span><span class="comment-time">just now</span></div><div class="comment-text">Fair — I was generous on the analysis depth. Happy to meet at 6.5. On Q4 I agree yours is right, the evaluation was stronger than I credited.</div></div>
+            </div>
+            <input class="form-input" style="margin-top:10px;height:38px" placeholder="Add a comment to the thread…">
+          </div>
+        </div>
+
+        <div class="flex gap8" style="font-size:12.5px;color:var(--textM);align-items:center"><span class="badge badge-blue">Audit</span> Every independent judgement, comment and reconciliation is logged with a timestamp — this is the comparable data behind the benchmarking layer.</div>
+      </div>
+
+      <!-- ═══════════════ AUTO TASK BUILDER ═══════════════ -->
+      <div id="page-builder" class="page">
+        <div class="page-head-row">
+          <div>
+            <div class="page-title">Auto Task Builder <span class="badge badge-purple" style="margin-left:8px;vertical-align:3px">✦ Corpus-grounded</span></div>
+            <div class="page-sub mb0">Generate a full task + rubric, or a rubric only — grounded in the real VCE Study Design so output aligns to the actual outcomes. You review and refine everything.</div>
+          </div>
+        </div>
+
+        <div class="builder-layout">
+          <div class="builder-form">
+            <div class="form-section-title">What to build</div>
+            <div class="form-group"><label class="form-label">Output</label>
+              <div class="mode-grid">
+                <div class="mode-opt sel"><div class="mode-title">Full task + rubric</div><div class="mode-desc">Questions, marks &amp; criteria</div></div>
+                <div class="mode-opt"><div class="mode-title">Rubric only</div><div class="mode-desc">For an existing task</div></div>
+              </div>
+            </div>
+            <div class="form-section-title">Parameters</div>
+            <div class="form-group"><label class="form-label">Curriculum</label><select class="form-select"><option>VCE</option><option>Australian Curriculum v9</option></select></div>
+            <div class="form-group"><label class="form-label">Subject</label><select class="form-select"><option>Business Management</option><option>Accounting</option><option>Economics</option><option>Legal Studies</option></select></div>
+            <div class="form-row">
+              <div><label class="form-label">Year / Unit</label><select class="form-select"><option>Unit 3 &amp; 4</option><option>Unit 1 &amp; 2</option></select></div>
+              <div><label class="form-label">Type</label><select class="form-select"><option>Summative (SAC)</option><option>Formative</option></select></div>
+            </div>
+            <div class="form-group"><label class="form-label">Unit &amp; topic</label><input class="form-input" value="Outcome 3 — Operations management"></div>
+            <div class="form-group"><label class="form-label">Instructions <span class="muted" style="font-weight:400">(free text)</span></label><textarea class="form-textarea" placeholder="e.g. Focus on technology and quality strategies. 4 questions, 30 marks, mix of explain/analyse/evaluate.">Focus on technology, materials and quality strategies. 4 questions building to an extended evaluation. 30 marks total.</textarea></div>
+            <button class="btn btn-purple btn-block btn-lg" onclick="runBuilder()">✦ Generate task</button>
+            <div class="form-hint" style="text-align:center;margin-top:10px">Grounded in the VCE BM Study Design corpus · output is unique, never a static bank</div>
+          </div>
+
+          <div class="builder-output">
+            <div class="builder-output-head"><span class="badge badge-purple">✦ Generated draft</span><span class="doc-name">Review &amp; edit before use</span><div style="margin-left:auto;display:flex;gap:7px"><button class="btn btn-secondary btn-sm" onclick="toast('Exported as PDF')">⤓ PDF</button><button class="btn btn-secondary btn-sm" onclick="toast('Exported as Word .docx')">⤓ Word</button></div></div>
+            <div class="builder-output-body" id="builder-output-body">
+              <div class="gen-placeholder">
+                <div class="gen-ico">✦</div>
+                <div style="font-size:14px;font-weight:600;color:var(--textM);margin-bottom:6px">Your generated task will appear here</div>
+                <div style="font-size:12.5px;max-width:280px">Set the parameters and click Generate. You'll get a complete, study-design-aligned task you can edit, regenerate, or export.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════ ARCHIVE & AUDIT (LEADERSHIP) ═══════════════ -->
+      <div id="page-archive" class="page">
+        <div class="page-head-row">
+          <div>
+            <div class="page-title">School Archive &amp; Audit</div>
+            <div class="page-sub mb0">A durable, school-wide record of every assessment, mark, moderation round and export — built for continuity, results reviews, and VCAA audit-readiness.</div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="openExport()">⤓ VCAA audit pack</button>
+        </div>
+
+        <div style="background:var(--amberL);border:1px solid var(--amberM);border-radius:var(--rL);padding:11px 15px;margin-bottom:20px;font-size:12.5px;color:var(--amber);display:flex;align-items:center;gap:9px"><span style="font-size:15px">👑</span> <span style="color:var(--textM)"><b style="color:var(--amber)">Leadership view</b> — visible to School Admins only. Scoped school-wide across all faculties, cohorts and years. (Teachers see only their own; coordinators see their course.)</span></div>
+
+        <div class="lead-metrics">
+          <div class="metric"><div class="metric-n bl">1,284</div><div class="metric-l">Assessments archived</div></div>
+          <div class="metric"><div class="metric-n nt">7</div><div class="metric-l">Faculties using Moderato</div></div>
+          <div class="metric"><div class="metric-n gd">94%</div><div class="metric-l">SACs with moderation records</div></div>
+          <div class="metric"><div class="metric-n nt">5 yrs</div><div class="metric-l">Retention (VCAA-aligned)</div></div>
+        </div>
+
+        <div class="filter-bar">
+          <span class="chip active">All faculties</span>
+          <span class="chip">Business</span>
+          <span class="chip">English</span>
+          <span class="chip">Humanities</span>
+          <span class="chip">Mathematics</span>
+          <span class="chip">Science</span>
+          <span style="margin-left:auto;font-size:12px;color:var(--textQ)">2026 · 2025 · 2024 ▾</span>
+        </div>
+
+        <table class="tbl">
+          <thead><tr><th>Assessment</th><th>Faculty</th><th>Cohort</th><th>Submissions</th><th>Moderation</th><th>Authentication</th><th>Audit pack</th></tr></thead>
+          <tbody>
+            <tr class="clickable" onclick="toast('Opening archived assessment record…')"><td class="td-name">U3&amp;4 SAC 1 — Operations</td><td class="small">Business</td><td class="small">2026 · Yr 12</td><td class="small">5 papers</td><td><span class="badge badge-amber">In progress</span></td><td><span class="badge badge-green">Complete</span></td><td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openExport()">Generate</button></td></tr>
+            <tr class="clickable" onclick="toast('Opening archived assessment record…')"><td class="td-name">U1&amp;2 SAC — Business Foundations</td><td class="small">Business</td><td class="small">2026 · Yr 11</td><td class="small">36 papers</td><td><span class="badge badge-green">89% agreement</span></td><td><span class="badge badge-green">Complete</span></td><td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openExport()">Generate</button></td></tr>
+            <tr class="clickable" onclick="toast('Opening archived assessment record…')"><td class="td-name">Text Response — Analytical Essay</td><td class="small">English</td><td class="small">2026 · Yr 12</td><td class="small">52 papers</td><td><span class="badge badge-green">93% agreement</span></td><td><span class="badge badge-green">Complete</span></td><td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openExport()">Generate</button></td></tr>
+            <tr class="clickable" onclick="toast('Opening archived assessment record…')"><td class="td-name">History SAC — WWI Causes</td><td class="small">Humanities</td><td class="small">2025 · Yr 12</td><td class="small">44 papers</td><td><span class="badge badge-green">90% agreement</span></td><td><span class="badge badge-green">Complete</span></td><td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openExport()">Generate</button></td></tr>
+            <tr class="clickable" onclick="toast('Opening archived assessment record…')"><td class="td-name">Methods SAC — Calculus App.</td><td class="small">Mathematics</td><td class="small">2025 · Yr 12</td><td class="small">61 papers</td><td><span class="badge badge-green">96% agreement</span></td><td><span class="badge badge-green">Complete</span></td><td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openExport()">Generate</button></td></tr>
+          </tbody>
+        </table>
+        <div class="small muted mt12">🔒 Append-only audit log · nothing hard-deleted before the retention period · every export and access recorded.</div>
+      </div>
+
+      <!-- ═══════════════ SETTINGS ═══════════════ -->
+      <div id="page-settings" class="page">
+        <div class="page-title">Settings</div>
+        <div class="page-sub">Demo settings — shows how schools configure roles, AI, and data.</div>
+        <div class="board">
+          <div>
+            <div class="panel-card" style="margin-bottom:16px">
+              <div class="panel-title">Role &amp; access</div>
+              <div class="form-group"><label class="form-label">Your role (try switching to see different views)</label>
+                <div class="mode-grid" style="grid-template-columns:1fr 1fr 1fr">
+                  <div class="mode-opt sel"><div class="mode-title">Teacher</div><div class="mode-desc">Own classes</div></div>
+                  <div class="mode-opt"><div class="mode-title">Coordinator</div><div class="mode-desc">Course-wide</div></div>
+                  <div class="mode-opt"><div class="mode-title">School Admin</div><div class="mode-desc">School-wide + audit</div></div>
+                </div>
+              </div>
+              <div class="form-hint">Row-Level Security scopes every record: teachers see their classes, coordinators their course, leadership the whole school.</div>
+            </div>
+            <div class="panel-card">
+              <div class="panel-title">Education-email access</div>
+              <div class="small muted" style="line-height:1.7">Sign-up is restricted to verified education domains via an allowlist — not a naive ".edu" check.<br><br>Seeded VIC patterns: <code style="background:var(--bg);padding:1px 6px;border-radius:4px">@education.vic.gov.au</code> · <code style="background:var(--bg);padding:1px 6px;border-radius:4px">*.vic.edu.au</code> · <code style="background:var(--bg);padding:1px 6px;border-radius:4px">*.catholic.edu.au</code><br><br>New school domains are added (admin-verified) at onboarding. The verified domain maps the user to their school.</div>
+            </div>
+          </div>
+          <div>
+            <div class="ai-panel" style="margin-bottom:16px">
+              <div class="ai-head"><div class="ai-icon">✦</div><div class="ai-title">Suggest marks &amp; feedback</div><div class="ai-toggle"><span>Enabled</span><div class="ai-switch"></div></div></div>
+              <div class="ai-body"><div class="small muted" style="line-height:1.7">The advisory AI is <b>disable-able school-wide</b>. The core marking + moderation flow works fully without it. Every suggestion is logged (model + version) and feeds the optional AI-assistance disclosure on exports.</div></div>
+            </div>
+            <div class="panel-card">
+              <div class="panel-title">Data &amp; residency</div>
+              <div class="flex between small" style="padding:6px 0"><span class="muted">Hosting region</span><b>Sydney (ap-southeast-2)</b></div>
+              <div class="flex between small" style="padding:6px 0"><span class="muted">AI processing</span><b>Vertex AI — Sydney</b></div>
+              <div class="flex between small" style="padding:6px 0"><span class="muted">Retention policy</span><b>VCAA-aligned</b></div>
+              <div class="flex between small" style="padding:6px 0"><span class="muted">Row-Level Security</span><b style="color:var(--green)">Active</b></div>
+              <div class="form-hint mt8">Australian-hosted. Student data stays onshore under the Privacy Act 1988 + APPs.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /pages -->
+  </main>
+</div><!-- /app -->
+
+<!-- ═══════════════ COLLEAGUE VIEW (external, no login) ═══════════════ -->
+<div id="colleague-view">
+  <div class="cv-banner">
+    <span>👁 <strong>This is exactly what your colleague sees</strong> — opened from a secure email link, no Moderato account, no sign-up.</span>
+    <button class="cv-back" onclick="closeColleague()">← Back to demo</button>
+  </div>
+  <div class="cv-topbar">
+    <span class="cv-logo">Moderato</span>
+    <div class="cv-context"><b>David Okafor</b> has asked you to <b>blind cross-mark</b> 4 papers · <b>Unit 3 SAC — Operations Management</b> · Eastgate College</div>
+    <span class="cv-secure">🔒 Secure link · expires in 7 days</span>
+  </div>
+  <div class="cv-body">
+    <div class="cv-paper-col">
+      <div class="cv-paper-sheet">
+        <div class="cv-watermark">MODERATO · DO NOT DISTRIBUTE</div>
+        <div class="paper-letterhead">
+          <div class="paper-school">Eastgate College</div>
+          <div class="paper-course">VCE Business Management · Units 3 &amp; 4 · 2026</div>
+          <div class="paper-task-title">SAC — Operations Management</div>
+          <div class="paper-student-line"><span class="pseudonym">🔒 Student B</span> &nbsp;·&nbsp; identity hidden for moderation · 30 marks</div>
+        </div>
+        <div class="paper-q">
+          <div class="pq-head"><span class="pq-num">Question 1</span><span class="pq-marks-tag">4 marks</span></div>
+          <div class="pq-prompt">Define operations management and outline its relationship to business objectives.</div>
+          <div class="pq-answer handwritten"><p>Operations management is how a business turns its inputs (materials, labour, machines) into outputs that customers buy. Managing operations well means producing efficiently, which lowers costs and supports objectives like profit and growth.</p></div>
+        </div>
+        <div class="paper-q">
+          <div class="pq-head"><span class="pq-num">Question 2</span><span class="pq-marks-tag">6 marks</span></div>
+          <div class="pq-prompt">Explain two technological strategies to improve operations.</div>
+          <div class="pq-answer handwritten"><p>Automated production lines use machinery to assemble products quickly and consistently, lifting output and reducing labour cost. Computer-aided design (CAD) lets a business design and test products digitally before manufacturing, cutting development time and material waste.</p></div>
+        </div>
+        <div class="paper-q">
+          <div class="pq-head"><span class="pq-num">Question 3</span><span class="pq-marks-tag">8 marks</span></div>
+          <div class="pq-prompt">Analyse a materials strategy and a waste minimisation strategy used together.</div>
+          <div class="pq-answer handwritten"><p>Forecasting predicts future demand so the right amount of materials is ordered, reducing both shortages and excess stock. Lean management removes waste from every process step. Together they keep inventory low while cutting process waste, though both need accurate data and reliable suppliers to work well.</p></div>
+        </div>
+        <div class="paper-q">
+          <div class="pq-head"><span class="pq-num">Question 4</span><span class="pq-marks-tag">12 marks</span></div>
+          <div class="pq-prompt">Evaluate TQM as a strategy to improve operations.</div>
+          <div class="pq-answer handwritten"><p>TQM makes quality everyone's responsibility and focuses on continuous improvement. It reduces defects and builds customer loyalty over time, supporting market-share objectives. However it is expensive to implement, slow to show results and needs constant leadership commitment. Overall it suits businesses competing on quality, but a business needing fast cost savings might choose a more targeted approach.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="cv-mark-col">
+      <div class="cv-ask-card">
+        <div class="cv-ask-title">✎ Blind cross-marking</div>
+        <div class="cv-ask-text">Mark each question using the rubric below — you can't see David's marks. Your independent marks are submitted back for comparison.</div>
+      </div>
+      <div class="panel-card" style="padding:12px 14px">
+        <div class="panel-title" style="margin-bottom:9px">Rubric &amp; exemplars</div>
+        <div class="small muted" style="line-height:1.6">📋 Marking guide attached<br>📌 2 exemplar responses at known marks (10/12, 6/12) — calibrate first</div>
+      </div>
+      <div class="panel-card">
+        <div class="panel-title">Your marks</div>
+        <div class="score-row"><div class="score-q">Q1</div><div class="score-desc">Define + relationship</div><div class="score-wrap"><input class="score-input" id="cvq1" type="number" min="0" max="4" placeholder="—" oninput="cvTotal()" onblur="styleInput(this)"><span class="score-of">/4</span></div></div>
+        <div class="score-row"><div class="score-q">Q2</div><div class="score-desc">Two tech strategies</div><div class="score-wrap"><input class="score-input" id="cvq2" type="number" min="0" max="6" placeholder="—" oninput="cvTotal()" onblur="styleInput(this)"><span class="score-of">/6</span></div></div>
+        <div class="score-row"><div class="score-q">Q3</div><div class="score-desc">Materials + waste</div><div class="score-wrap"><input class="score-input" id="cvq3" type="number" min="0" max="8" placeholder="—" oninput="cvTotal()" onblur="styleInput(this)"><span class="score-of">/8</span></div></div>
+        <div class="score-row"><div class="score-q">Q4</div><div class="score-desc">Evaluate TQM</div><div class="score-wrap"><input class="score-input" id="cvq4" type="number" min="0" max="12" placeholder="—" oninput="cvTotal()" onblur="styleInput(this)"><span class="score-of">/12</span></div></div>
+      </div>
+      <div class="total-block"><div><div class="total-label">Your total</div><div class="total-sub">out of 30</div></div><div style="display:flex;align-items:baseline"><span class="total-val" id="cv-total">—</span><span class="total-pct" id="cv-pct"></span></div></div>
+      <div class="panel-card"><div class="panel-title">Comments <span style="margin-left:auto;font-weight:400;text-transform:none;letter-spacing:0;color:var(--textQ)">visible to David</span></div><textarea class="feedback-textarea" placeholder="Per-question or overall comments — these return to David alongside your marks…"></textarea></div>
+      <button class="btn btn-purple btn-block" onclick="cvSubmit()">Submit marks →</button>
+      <div class="small muted" style="text-align:center;line-height:1.5">No download · watermarked · all access logged<br>Optional: <span style="color:var(--purple);cursor:pointer" onclick="openAccess()">create your own free account</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ MODAL: SEND FOR MODERATION ═══════════════ -->
+<div id="modal-moderation" class="modal-backdrop" onclick="closeModalBg(event,'modal-moderation')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-head"><span class="modal-title">⇌ Send for cross-marking</span><span class="modal-close" onclick="closeModal('modal-moderation')">×</span></div>
+    <div class="modal-body">
+      <div id="mod-step1" class="modal-step active">
+        <div class="modal-note">Your colleague gets a <strong>secure link</strong> — they mark in the browser with <strong>no sign-up</strong>. Student names are pseudonymised, the link is watermarked, time-limited and revocable.</div>
+        <div class="form-group"><label class="form-label">Papers to moderate</label>
+          <div style="display:flex;gap:7px;flex-wrap:wrap"><span class="chip active">All marked (1)</span><span class="chip">Select papers</span><span class="chip">Whole class (5)</span></div>
+        </div>
+        <div class="form-group"><label class="form-label">Colleague's email <span class="req">*</span></label><input class="form-input" id="mod-email" type="email" placeholder="name@school.vic.edu.au"></div>
+        <div class="form-group"><label class="form-label">Mode</label>
+          <div class="mode-grid">
+            <div class="mode-opt sel" id="md-blind" onclick="selMode('md','blind')"><div class="mode-title">Blind cross-marking</div><div class="mode-desc">They mark independently; marks revealed after both finish</div></div>
+            <div class="mode-opt" id="md-mod" onclick="selMode('md','mod')"><div class="mode-title">Please moderate</div><div class="mode-desc">They review &amp; adjust your existing marks</div></div>
+          </div>
+        </div>
+        <div class="form-group mb0"><label class="form-label">Attach calibration aids</label>
+          <label class="small muted" style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" checked> Rubric / marking guide</label>
+          <label class="small muted" style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-top:6px"><input type="checkbox" checked> 2 exemplar responses at known marks</label>
+        </div>
+      </div>
+      <div id="mod-step2" class="modal-step">
+        <div style="text-align:center;padding:22px 0"><div style="font-size:38px;margin-bottom:14px">🔗</div><div style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:6px">Generating secure link…</div><div class="small muted">Tokenising · scoping to this task only · pseudonymising · setting 7-day expiry</div></div>
+      </div>
+      <div id="mod-step3" class="modal-step">
+        <div style="font-size:14px;font-weight:700;margin-bottom:14px">✅ Sent to <span id="mod-recipient" style="color:var(--blue)"></span></div>
+        <div style="background:var(--navy);border-radius:9px;padding:12px 15px;display:flex;align-items:center;gap:10px;margin-bottom:14px"><span style="width:8px;height:8px;border-radius:50%;background:#34D399"></span><span style="font-size:12px;color:rgba(255,255,255,.65);font-family:monospace">moderato.app/moderate/a7f3k9x2…</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:14px">
+          <div class="small muted" style="display:flex;gap:6px;align-items:center"><span style="width:6px;height:6px;border-radius:50%;background:var(--green)"></span>No sign-up required</div>
+          <div class="small muted" style="display:flex;gap:6px;align-items:center"><span style="width:6px;height:6px;border-radius:50%;background:var(--green)"></span>Student names hidden</div>
+          <div class="small muted" style="display:flex;gap:6px;align-items:center"><span style="width:6px;height:6px;border-radius:50%;background:var(--green)"></span>Expires in 7 days</div>
+          <div class="small muted" style="display:flex;gap:6px;align-items:center"><span style="width:6px;height:6px;border-radius:50%;background:var(--green)"></span>Watermarked, no download</div>
+          <div class="small muted" style="display:flex;gap:6px;align-items:center"><span style="width:6px;height:6px;border-radius:50%;background:var(--green)"></span>Logged &amp; revocable</div>
+          <div class="small muted" style="display:flex;gap:6px;align-items:center"><span style="width:6px;height:6px;border-radius:50%;background:var(--green)"></span>Task-scoped only</div>
+        </div>
+        <button class="btn btn-secondary btn-block btn-sm" onclick="closeModal('modal-moderation');openColleague()">👁 Preview what your colleague sees →</button>
+      </div>
+    </div>
+    <div class="modal-footer" id="mod-footer"><button class="btn btn-secondary" onclick="closeModal('modal-moderation')">Cancel</button><button class="btn btn-primary" id="mod-send" onclick="modSend()">Send secure link →</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════ MODAL: EXPORT ═══════════════ -->
+<div id="modal-export" class="modal-backdrop" onclick="closeModalBg(event,'modal-export')">
+  <div class="modal modal-wide" onclick="event.stopPropagation()">
+    <div class="modal-head"><span class="modal-title">⤓ Export finalised records</span><span class="modal-close" onclick="closeModal('modal-export')">×</span></div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:1fr 1.1fr;gap:22px">
+        <div>
+          <div class="form-group"><label class="form-label">Scope</label><div style="display:flex;gap:7px;flex-wrap:wrap"><span class="chip">Individual</span><span class="chip active">Whole class (5)</span></div></div>
+          <div class="form-group"><label class="form-label">Moderation status on cover</label><select class="form-select"><option>Auto (from on-platform history)</option><option>This paper was moderated</option><option>This assessment has been moderated</option><option>Not moderated</option></select><div class="form-hint">No integrity restriction — teachers may moderate off-platform. No moderator name is shown.</div></div>
+          <div class="form-group"><label class="form-label">Include</label>
+            <label class="small muted" style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" checked> Per-question feedback</label>
+            <label class="small muted" style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-top:6px"><input type="checkbox" checked> Overall feedback</label>
+            <label class="small muted" style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-top:6px"><input type="checkbox" checked> Marks + percentage</label>
+            <label class="small muted" style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-top:6px"><input type="checkbox"> AI-assistance disclosure</label>
+          </div>
+          <div class="form-hint">File: <code style="background:var(--bg);padding:1px 5px;border-radius:4px;font-size:11px">kowalski_james_bm_sac1_chen_09jun2026.pdf</code></div>
+        </div>
+        <div>
+          <div class="form-label">Cover page preview</div>
+          <div class="cover-preview">
+            <div class="cover-logo">Moderato</div>
+            <div class="cover-row"><span class="k">Student</span><span class="v">James Kowalski</span></div>
+            <div class="cover-row"><span class="k">Assessment</span><span class="v">SAC 1 — Operations Management</span></div>
+            <div class="cover-row"><span class="k">Course · Class</span><span class="v">VCE BM U3&amp;4 · Class A</span></div>
+            <div class="cover-row"><span class="k">Teacher / marker</span><span class="v">Marcus Chen</span></div>
+            <div class="cover-row"><span class="k">School</span><span class="v">Southvale Secondary College</span></div>
+            <table class="cover-marks-tbl"><tr><th>Q</th><th>Mark</th><th>Out of</th></tr><tr><td>Q1</td><td>4</td><td>4</td></tr><tr><td>Q2</td><td>5</td><td>6</td></tr><tr><td>Q3</td><td>6</td><td>8</td></tr><tr><td>Q4</td><td>10</td><td>12</td></tr><tr style="background:var(--blueXL);font-weight:700"><td>Total</td><td>25</td><td>30</td></tr></table>
+            <div class="cover-row"><span class="k">Result</span><span class="v">25 / 30 · 83%</span></div>
+            <div class="cover-row"><span class="k">Moderation</span><span class="v" style="color:var(--green)">This paper was moderated</span></div>
+            <div class="cover-row" style="border:none"><span class="k">Record ID · date</span><span class="v">#MX-2026-0612-A · 12 Jun 2026</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-export')">Cancel</button><button class="btn btn-primary" onclick="closeModal('modal-export');toast('5 papers exported as PDF — export record saved to archive')">⤓ Export 5 papers</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════ MODAL: SHARE COPY ═══════════════ -->
+<div id="modal-share" class="modal-backdrop" onclick="closeModalBg(event,'modal-share')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-head"><span class="modal-title">⧉ Send a duplicate copy</span><span class="modal-close" onclick="closeModal('modal-share')">×</span></div>
+    <div class="modal-body">
+      <div class="modal-note">Send a copy of this task to a colleague — they import it into their own Tasks. This is a logged, peer-to-peer share, <strong>not a public bank</strong>.</div>
+      <div style="background:var(--amberL);border-radius:9px;padding:11px 13px;margin-bottom:16px;font-size:12px;color:var(--amber);line-height:1.5">⚠ This is a <b>summative</b> task — sharing live assessment content has authentication implications. Share only with trusted co-teachers.</div>
+      <div class="form-group mb0"><label class="form-label">Colleague's email <span class="req">*</span></label><input class="form-input" type="email" placeholder="name@school.vic.edu.au"></div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-share')">Cancel</button><button class="btn btn-primary" onclick="closeModal('modal-share');toast('Copy sent — share logged for authentication records')">Send copy →</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════ MODAL: CREATE TASK ═══════════════ -->
+<div id="modal-create" class="modal-backdrop" onclick="closeModalBg(event,'modal-create')">
+  <div class="modal modal-wide" onclick="event.stopPropagation()">
+    <div class="modal-head"><span class="modal-title">+ Create task — Build manually</span><span class="modal-close" onclick="closeModal('modal-create')">×</span></div>
+    <div class="modal-body">
+      <div class="form-section-title">Task definition</div>
+      <div class="form-row">
+        <div><label class="form-label">Course (subject + unit) <span class="req">*</span></label><select class="form-select"><option>VCE Business Management — Unit 3 &amp; 4</option><option>VCE Business Management — Unit 1 &amp; 2</option></select></div>
+        <div><label class="form-label">Year level</label><select class="form-select"><option>Year 12</option><option>Year 11</option></select></div>
+      </div>
+      <div class="form-row">
+        <div><label class="form-label">Assessment name <span class="req">*</span></label><input class="form-input" placeholder="e.g. SAC 2 — Managing Employees"></div>
+        <div><label class="form-label">Type</label><select class="form-select"><option>Summative (SAC)</option><option>Formative</option></select></div>
+      </div>
+      <div class="form-row">
+        <div><label class="form-label">Sit date</label><input class="form-input" type="date" value="2026-08-08"></div>
+        <div><label class="form-label">Due date</label><input class="form-input" type="date" value="2026-08-08"></div>
+      </div>
+      <div class="form-row">
+        <div><label class="form-label">Class(es)</label><select class="form-select"><option>Class A</option><option>Class A + B</option></select></div>
+        <div><label class="form-label">Linked outcome</label><select class="form-select"><option>Outcome 2 — Managing employees</option><option>Outcome 3 — Operations management</option></select></div>
+      </div>
+      <div class="form-group"><label class="form-label">Instructions / notes</label><textarea class="form-textarea" placeholder="Conditions, materials allowed, etc."></textarea></div>
+
+      <div class="form-section-title">Question structure <span style="font-weight:400;color:var(--textQ);font-size:11px">— applied to every submission; edits cascade to all students</span></div>
+      <table class="tbl" style="font-size:12.5px">
+        <thead><tr><th>Label</th><th>Out of</th><th></th></tr></thead>
+        <tbody>
+          <tr><td><input class="form-input" style="height:34px" value="Q1"></td><td><input class="form-input" style="height:34px;width:80px" type="number" value="4"></td><td><button class="btn btn-ghost btn-sm">✕</button></td></tr>
+          <tr><td><input class="form-input" style="height:34px" value="Q2"></td><td><input class="form-input" style="height:34px;width:80px" type="number" value="6"></td><td><button class="btn btn-ghost btn-sm">✕</button></td></tr>
+          <tr><td><input class="form-input" style="height:34px" value="Q3"></td><td><input class="form-input" style="height:34px;width:80px" type="number" value="8"></td><td><button class="btn btn-ghost btn-sm">✕</button></td></tr>
+          <tr><td><input class="form-input" style="height:34px" value="Q4"></td><td><input class="form-input" style="height:34px;width:80px" type="number" value="12"></td><td><button class="btn btn-ghost btn-sm">✕</button></td></tr>
+        </tbody>
+      </table>
+      <div class="flex between items-center mt12"><button class="btn btn-ghost btn-sm">+ Add question</button><span class="small muted">Total: <b style="color:var(--navy)">30 marks</b> (auto-summed)</span></div>
+      <div class="small muted mt12" style="display:flex;align-items:center;gap:8px"><span class="badge badge-purple">✦ Tip</span> Or skip this and let the Auto Task Builder generate the questions + rubric for you.</div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-create')">Cancel</button><button class="btn btn-purple btn-sm" onclick="closeModal('modal-create');go('builder')">✦ Use Auto Builder</button><button class="btn btn-primary" onclick="closeModal('modal-create');toast('Task created — next: add the rubric and roster the class')">Create task →</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════ MODAL: REQUEST EARLY ACCESS ═══════════════ -->
+<div id="modal-access" class="modal-backdrop" onclick="closeModalBg(event,'modal-access')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-head access">
+      <div>
+        <span class="modal-title">⚡ Request early access</span>
+        <div class="modal-sub-h">Moderato is onboarding a small group of VIC design-partner schools.</div>
+      </div>
+      <span class="modal-close" onclick="closeModal('modal-access')">×</span>
+    </div>
+    <div class="modal-body">
+      <div id="access-form">
+        <div class="modal-note" style="background:var(--amberL);color:var(--amber)"><strong>Built by a practising VCE teacher.</strong> <span style="color:var(--textM)">Tell us a little about you and we'll be in touch about a pilot. No commitment.</span></div>
+        <div class="form-group"><label class="form-label">Your name <span class="req">*</span></label><input class="form-input" id="ac-name" placeholder="Jane Smith"></div>
+        <div class="form-group"><label class="form-label">Work email <span class="req">*</span></label><input class="form-input" id="ac-email" type="email" placeholder="jsmith@school.vic.edu.au"><div class="form-hint">A school / education email helps us verify you.</div></div>
+        <div class="form-group"><label class="form-label">School</label><input class="form-input" id="ac-school" placeholder="e.g. Southvale Secondary College"></div>
+        <div class="form-group"><label class="form-label">Your role</label>
+          <select class="form-select" id="ac-role">
+            <option>Classroom teacher</option>
+            <option>Head of Department / Learning Area</option>
+            <option>Curriculum / Assessment leader</option>
+            <option>Principal / Deputy</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group mb0"><label class="form-label">Your biggest assessment or moderation pain point <span class="muted" style="font-weight:400">(optional)</span></label><textarea class="form-textarea" id="ac-msg" placeholder="What takes the most time, or causes the most stress, in your current marking & moderation?"></textarea></div>
+        <div id="ac-error" style="display:none;color:var(--red);font-size:12.5px;margin-top:12px;font-weight:500"></div>
+      </div>
+      <div id="access-success" style="display:none">
+        <div class="success-state">
+          <div class="success-ico">✓</div>
+          <div style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:8px">Thanks — we've got it.</div>
+          <div style="font-size:13.5px;color:var(--textM);line-height:1.6;max-width:320px;margin:0 auto">Your interest has been sent to the Moderato team. We'll reach out about an early-access pilot. Talk soon.</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer" id="access-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-access')">Maybe later</button>
+      <button class="btn cta-access" style="box-shadow:none" id="ac-submit" onclick="submitAccess()">Request access →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ TOAST ═══════════════ -->
+<div id="toast" class="toast"><span class="tcheck">✓</span><span id="toast-msg"></span></div>
+
+<script>
+/* ════════════ EARLY-ACCESS EMAIL CONFIG ════════════
+   To receive form submissions at marcus@fisalprojects.com:
+   1. Go to https://web3forms.com  (free, no account needed)
+   2. Enter marcus@fisalprojects.com → you'll be emailed an Access Key instantly
+   3. Paste that key between the quotes below, replacing YOUR_WEB3FORMS_ACCESS_KEY
+   Until then, the form falls back to opening the visitor's email app
+   pre-addressed to marcus@fisalprojects.com — so it works right away.
+*/
+var WEB3FORMS_ACCESS_KEY = "YOUR_WEB3FORMS_ACCESS_KEY";
+var CONTACT_EMAIL = "marcus@fisalprojects.com";
+
+/* ──────── Page navigation ──────── */
+var navMap = {home:'nav-home',tasks:'nav-tasks',taskdetail:'nav-tasks',marking:'nav-tasks',cross:'nav-cross',modresults:'nav-cross',builder:'nav-builder',archive:'nav-archive',settings:'nav-settings'};
+var crumbs = {
+  home:'<span class="cur">Home</span>',
+  tasks:'<a onclick="go(\'home\')">Home</a><span class="sep">/</span><span class="cur">Tasks</span>',
+  taskdetail:'<a onclick="go(\'home\')">Home</a><span class="sep">/</span><a onclick="go(\'tasks\')">Tasks</a><span class="sep">/</span><span class="cur">SAC 1 — Operations Management</span>',
+  marking:'<a onclick="go(\'home\')">Home</a><span class="sep">/</span><a onclick="go(\'tasks\')">Tasks</a><span class="sep">/</span><a onclick="go(\'taskdetail\')">SAC 1</a><span class="sep">/</span><span class="cur">James Kowalski</span>',
+  cross:'<a onclick="go(\'home\')">Home</a><span class="sep">/</span><span class="cur">Cross-marking</span>',
+  modresults:'<a onclick="go(\'home\')">Home</a><span class="sep">/</span><a onclick="go(\'cross\')">Cross-marking</a><span class="sep">/</span><span class="cur">Unit 1 SAC comparison</span>',
+  builder:'<a onclick="go(\'home\')">Home</a><span class="sep">/</span><span class="cur">Auto Task Builder</span>',
+  archive:'<a onclick="go(\'home\')">Home</a><span class="sep">/</span><span class="cur">School Archive &amp; Audit</span>',
+  settings:'<a onclick="go(\'home\')">Home</a><span class="sep">/</span><span class="cur">Settings</span>'
+};
+function go(view){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  var pg=document.getElementById('page-'+view);
+  if(pg)pg.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active');});
+  var nav=document.getElementById(navMap[view]);
+  if(nav)nav.classList.add('active');
+  var bc=document.getElementById('breadcrumb');
+  if(bc&&crumbs[view])bc.innerHTML=crumbs[view];
+  var pages=document.getElementById('pages');
+  if(pages)pages.scrollTop=0;
+}
+function openTaskDetail(){go('taskdetail');}
+function openMarking(){go('marking');}
+function openModerationResults(){go('modresults');}
+
+/* ──────── Marking (owner) ──────── */
+function updateTotal(){
+  var ids=['q1','q2','q3','q4'],tot=0,any=false;
+  ids.forEach(function(id){var v=parseFloat(document.getElementById(id).value);if(!isNaN(v)){tot+=v;any=true;}});
+  var tv=document.getElementById('total-display'),tp=document.getElementById('pct-display');
+  if(!any){tv.textContent='—';tp.textContent='';tv.style.color='#fff';return;}
+  var pct=Math.round((tot/30)*100);
+  tv.textContent=Math.round(tot);tp.textContent=pct+'%';
+  var c=pct>=70?'#4ADE80':pct>=50?'#FCD34D':'#F87171';
+  tv.style.color=c;tp.style.color=c;
+}
+function styleInput(el){if(el.value!=='')el.classList.add('filled');else el.classList.remove('filled');}
+function completeMarking(){
+  var ids=['q1','q2','q3','q4'];
+  for(var i=0;i<ids.length;i++){if(!document.getElementById(ids[i]).value){alert('Please enter a mark for all four questions before completing.');return;}}
+  var tot=0;ids.forEach(function(id){tot+=parseFloat(document.getElementById(id).value);});
+  var pct=Math.round((tot/30)*100);
+  var btn=document.getElementById('complete-btn');
+  btn.textContent='✓ Marked — '+Math.round(tot)+'/30 · '+pct+'%';
+  btn.className='btn btn-success btn-block';btn.disabled=true;
+  toast('James Kowalski marked — '+Math.round(tot)+'/30');
+  setTimeout(function(){go('taskdetail');},1100);
+}
+
+/* ──────── Suggest-marks AI toggle ──────── */
+var aiOn=true;
+function toggleAI(){
+  aiOn=!aiOn;
+  document.getElementById('ai-switch').classList.toggle('off',!aiOn);
+  document.getElementById('ai-state-label').textContent=aiOn?'On':'Off';
+  document.getElementById('ai-body').style.display=aiOn?'block':'none';
+}
+
+/* ──────── Colleague (blind cross-marking) view ──────── */
+function cvTotal(){
+  var ids=['cvq1','cvq2','cvq3','cvq4'],tot=0,any=false;
+  ids.forEach(function(id){var v=parseFloat(document.getElementById(id).value);if(!isNaN(v)){tot+=v;any=true;}});
+  var tv=document.getElementById('cv-total'),tp=document.getElementById('cv-pct');
+  if(!any){tv.textContent='—';tp.textContent='';tv.style.color='#fff';return;}
+  var pct=Math.round((tot/30)*100);
+  tv.textContent=Math.round(tot);tp.textContent=pct+'%';
+  var c=pct>=70?'#4ADE80':pct>=50?'#FCD34D':'#F87171';
+  tv.style.color=c;tp.style.color=c;
+}
+function openColleague(){document.getElementById('colleague-view').classList.add('open');}
+function closeColleague(){document.getElementById('colleague-view').classList.remove('open');}
+function cvSubmit(){
+  var ids=['cvq1','cvq2','cvq3','cvq4'];
+  for(var i=0;i<ids.length;i++){if(!document.getElementById(ids[i]).value){alert('Please mark all four questions before submitting.');return;}}
+  closeColleague();
+  toast('Marks submitted to David — comparison sent back automatically');
+}
+
+/* ──────── Modals ──────── */
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+function closeModalBg(e,id){if(e.target===document.getElementById(id))closeModal(id);}
+function openCreateTask(){openModal('modal-create');}
+function openShare(){openModal('modal-share');}
+function openExport(){openModal('modal-export');}
+function selMode(prefix,val){
+  document.getElementById(prefix+'-blind').classList.toggle('sel',val==='blind');
+  document.getElementById(prefix+'-mod').classList.toggle('sel',val==='mod');
+}
+
+/* ──────── Moderation send (3-step) ──────── */
+function openModeration(){
+  document.querySelectorAll('#modal-moderation .modal-step').forEach(function(s){s.classList.remove('active');});
+  document.getElementById('mod-step1').classList.add('active');
+  document.getElementById('mod-footer').innerHTML='<button class="btn btn-secondary" onclick="closeModal(\'modal-moderation\')">Cancel</button><button class="btn btn-primary" id="mod-send" onclick="modSend()">Send secure link →</button>';
+  openModal('modal-moderation');
+}
+function modSend(){
+  var em=document.getElementById('mod-email').value.trim();
+  if(!em){document.getElementById('mod-email').focus();document.getElementById('mod-email').style.borderColor='#DC2626';return;}
+  document.querySelectorAll('#modal-moderation .modal-step').forEach(function(s){s.classList.remove('active');});
+  document.getElementById('mod-step2').classList.add('active');
+  document.getElementById('mod-footer').innerHTML='';
+  setTimeout(function(){
+    document.querySelectorAll('#modal-moderation .modal-step').forEach(function(s){s.classList.remove('active');});
+    document.getElementById('mod-recipient').textContent=em;
+    document.getElementById('mod-step3').classList.add('active');
+    document.getElementById('mod-footer').innerHTML='<button class="btn btn-primary btn-block" onclick="closeModal(\'modal-moderation\')">Done</button>';
+  },1700);
+}
+
+/* ──────── Auto Task Builder ──────── */
+function runBuilder(){
+  var out=document.getElementById('builder-output-body');
+  out.innerHTML='<div class="gen-placeholder"><div class="gen-ico" style="animation:pulse 1.2s infinite">✦</div><div style="font-size:14px;font-weight:600;color:var(--purple)">Generating from the VCE BM Study Design…</div><div class="small muted mt8">Aligning to Outcome 3 · drafting questions · building rubric bands</div></div>';
+  setTimeout(function(){
+    out.innerHTML='<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--purple);margin-bottom:6px">Generated draft · editable</div>'+
+    '<div style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:3px">SAC — Operations Management</div>'+
+    '<div class="small muted" style="margin-bottom:18px">VCE Business Management U3&amp;4 · Outcome 3 · 30 marks · est. 60 min</div>'+
+    '<div style="margin-bottom:16px"><div style="display:flex;justify-content:space-between"><b style="font-size:13px">Question 1</b><span class="pq-marks-tag">4 marks</span></div><div style="font-size:13px;color:var(--textM);margin-top:4px;line-height:1.6">Define operations management and outline its relationship to the achievement of business objectives.</div><div class="small" style="color:var(--purple);margin-top:5px">Rubric: 1 mark definition · 1 mark each input/process/output · link to objectives</div></div>'+
+    '<div style="margin-bottom:16px"><div style="display:flex;justify-content:space-between"><b style="font-size:13px">Question 2</b><span class="pq-marks-tag">6 marks</span></div><div style="font-size:13px;color:var(--textM);margin-top:4px;line-height:1.6">Explain two technological strategies a business could use to improve the efficiency and effectiveness of operations.</div><div class="small" style="color:var(--purple);margin-top:5px">Rubric: 3 marks per strategy — identification + efficiency + effectiveness</div></div>'+
+    '<div style="margin-bottom:16px"><div style="display:flex;justify-content:space-between"><b style="font-size:13px">Question 3</b><span class="pq-marks-tag">8 marks</span></div><div style="font-size:13px;color:var(--textM);margin-top:4px;line-height:1.6">Analyse how a materials strategy and a waste minimisation strategy could be used together to improve operations.</div><div class="small" style="color:var(--purple);margin-top:5px">Rubric: bands by depth of analysis + how strategies interrelate</div></div>'+
+    '<div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between"><b style="font-size:13px">Question 4</b><span class="pq-marks-tag">12 marks</span></div><div style="font-size:13px;color:var(--textM);margin-top:4px;line-height:1.6">Evaluate the effectiveness of Total Quality Management as a strategy to improve operations. Refer to a relevant business.</div><div class="small" style="color:var(--purple);margin-top:5px">Rubric: 4 bands — strengths, limitations, business application, justified conclusion</div></div>'+
+    '<div class="divider"></div>'+
+    '<div class="flex gap8"><button class="btn btn-purple btn-sm" onclick="toast(\'Regenerating with a fresh variation…\')">✦ Regenerate</button><button class="btn btn-secondary btn-sm" onclick="toast(\'Saved to Tasks as a draft\')">+ Save to Tasks</button></div>';
+  },1700);
+}
+
+/* ──────── Toast ──────── */
+var toastTimer;
+function toast(msg){
+  var t=document.getElementById('toast');
+  document.getElementById('toast-msg').textContent=msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){t.classList.remove('show');},3200);
+}
+
+/* ──────── Early-access form ──────── */
+function openAccess(){
+  document.getElementById('access-form').style.display='block';
+  document.getElementById('access-success').style.display='none';
+  document.getElementById('access-footer').style.display='flex';
+  document.getElementById('ac-error').style.display='none';
+  openModal('modal-access');
+}
+function showAccessSuccess(){
+  document.getElementById('access-form').style.display='none';
+  document.getElementById('access-success').style.display='block';
+  document.getElementById('access-footer').style.display='none';
+}
+function submitAccess(){
+  var name=document.getElementById('ac-name').value.trim();
+  var email=document.getElementById('ac-email').value.trim();
+  var school=document.getElementById('ac-school').value.trim();
+  var role=document.getElementById('ac-role').value;
+  var msg=document.getElementById('ac-msg').value.trim();
+  var err=document.getElementById('ac-error');
+  if(!name||!email){err.textContent='Please enter at least your name and email.';err.style.display='block';return;}
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){err.textContent='Please enter a valid email address.';err.style.display='block';return;}
+  err.style.display='none';
+  var btn=document.getElementById('ac-submit');btn.textContent='Sending…';btn.disabled=true;
+
+  if(WEB3FORMS_ACCESS_KEY&&WEB3FORMS_ACCESS_KEY!=="YOUR_WEB3FORMS_ACCESS_KEY"){
+    fetch('https://api.web3forms.com/submit',{
+      method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},
+      body:JSON.stringify({access_key:WEB3FORMS_ACCESS_KEY,subject:'New Moderato early-access request — '+name,from_name:'Moderato Demo Site',name:name,email:email,school:school,role:role,message:msg})
+    }).then(function(r){return r.json();}).then(function(data){
+      if(data.success){showAccessSuccess();}
+      else{err.textContent='Something went wrong — please email '+CONTACT_EMAIL+' directly.';err.style.display='block';btn.textContent='Request access →';btn.disabled=false;}
+    }).catch(function(){
+      err.textContent='Network issue — please email '+CONTACT_EMAIL+' directly.';err.style.display='block';btn.textContent='Request access →';btn.disabled=false;
+    });
+  }else{
+    /* Fallback: open the visitor's mail client pre-addressed to Marcus */
+    var body='New early-access request from the Moderato demo:%0D%0A%0D%0AName: '+encodeURIComponent(name)+'%0D%0AEmail: '+encodeURIComponent(email)+'%0D%0ASchool: '+encodeURIComponent(school)+'%0D%0ARole: '+encodeURIComponent(role)+'%0D%0A%0D%0APain point:%0D%0A'+encodeURIComponent(msg);
+    window.location.href='mailto:'+CONTACT_EMAIL+'?subject='+encodeURIComponent('Moderato early-access request — '+name)+'&body='+body;
+    setTimeout(showAccessSuccess,600);
+  }
+}
+
+/* ──────── Init ──────── */
+document.addEventListener('DOMContentLoaded',function(){go('home');});
+</script>
+</body>
+</html>
