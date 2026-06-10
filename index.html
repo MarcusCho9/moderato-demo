@@ -232,7 +232,7 @@ button{font-family:inherit}
 .empty-state .ico{font-size:32px;margin-bottom:10px;opacity:.5}
 
 /* ════ MARKING VIEW ════ */
-.marking-layout{display:grid;grid-template-columns:1fr 400px;gap:18px;height:calc(100vh - var(--topbar) - var(--banner) - 36px)}
+.marking-layout{display:grid;grid-template-columns:1fr 400px;gap:18px;height:calc(100vh - var(--topbar) - var(--banner) - 90px)}
 .paper-viewer{background:var(--surface);border:1px solid var(--border);border-radius:var(--rL);display:flex;flex-direction:column;overflow:hidden}
 .paper-toolbar{background:var(--bg);border-bottom:1px solid var(--border);padding:11px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0}
 .paper-toolbar .doc-name{font-size:12.5px;color:var(--textM);font-weight:500}
@@ -513,6 +513,69 @@ button{font-family:inherit}
   #demo-tip{right:10px;bottom:10px}
 }
 
+
+/* ════ LINEAR NAV — SUBNAV BACK BAR ════ */
+.subnav{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.subnav-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--blue);cursor:pointer;padding:7px 13px;border-radius:8px;border:1px solid var(--border);background:var(--surface);transition:all .14s;user-select:none}
+.subnav-back:hover{border-color:var(--blue);background:var(--blueL)}
+
+/* ════ CROSS-MARKING REDESIGN ════ */
+.xm-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:20px}
+.xm-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rL);overflow:hidden}
+.xm-row{display:flex;align-items:center;gap:13px;padding:13px 16px;border-bottom:1px solid var(--borderL)}
+.xm-row:last-child{border-bottom:none}
+.xm-row.compact{padding:11px 16px}
+.xm-ico{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.xm-ico.green{background:var(--greenL);color:var(--green)}
+.xm-ico.amber{background:var(--amberL);color:var(--amber)}
+.xm-ico.blue{background:var(--blueL);color:var(--blue)}
+.xm-body{flex:1;min-width:0}
+.xm-title{font-size:13.5px;font-weight:600;color:var(--text);line-height:1.35}
+.xm-meta{font-size:11.5px;color:var(--textM);margin-top:2px}
+.xm-chips{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap}
+.xm-chip{font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:10px;background:#F1F5F9;color:var(--textM)}
+.xm-chip.ok{background:var(--greenL);color:var(--green)}
+.xm-chip.warn{background:var(--redL);color:var(--red)}
+.xm-act{flex-shrink:0}
+.xm-progress-inline{height:5px;background:var(--borderL);border-radius:3px;overflow:hidden;margin-top:8px;max-width:170px}
+.xm-progress-bar{height:100%;background:var(--blue);border-radius:3px}
+.xm-how{background:var(--blueXL);border:1px solid var(--blueM);border-radius:var(--rL);padding:15px 17px;margin-top:16px}
+.xm-how-title{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:11px}
+.xm-step{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--textM);line-height:1.5;margin-bottom:9px}
+.xm-step:last-child{margin-bottom:0}
+.xm-step-n{width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+
+/* ════ AI MARKING ASSISTANT — more prominent ════ */
+.ai-panel{box-shadow:0 3px 14px rgba(124,58,237,.12);border-color:#C4B5FD}
+.ai-head-text{flex:1;min-width:0}
+.ai-subtitle{font-size:10.5px;color:var(--purple);opacity:.85;margin-top:1px;font-weight:500}
+.ai-hide-btn{background:#fff;border:1px solid var(--purpleM);color:var(--purple);font-size:11px;font-weight:700;padding:4px 11px;border-radius:7px;cursor:pointer;flex-shrink:0;transition:background .14s}
+.ai-hide-btn:hover{background:var(--purpleM)}
+
+/* ════ PRICING ════ */
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px}
+.price-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--rXL);padding:24px 26px;display:flex;flex-direction:column}
+.price-card.featured{border-color:var(--blue);box-shadow:0 6px 22px rgba(46,117,182,.13);position:relative}
+.price-flag{position:absolute;top:-11px;left:24px;background:var(--blue);color:#fff;font-size:10.5px;font-weight:700;padding:3px 12px;border-radius:10px;letter-spacing:.3px}
+.price-kicker{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--textM)}
+.price-name{font-size:19px;font-weight:800;color:var(--navy);margin:4px 0 12px}
+.price-tag{display:flex;align-items:baseline;gap:5px}
+.price-amt{font-size:38px;font-weight:800;letter-spacing:-1.5px;color:var(--text);line-height:1}
+.price-per{font-size:13px;color:var(--textM);font-weight:500}
+.price-custom{font-size:26px;font-weight:800;color:var(--navy);line-height:1.1}
+.price-alt{font-size:12.5px;color:var(--green);font-weight:600;margin-top:7px}
+.price-alt .strike{color:var(--textQ);text-decoration:line-through;font-weight:400;margin-right:6px}
+.price-desc{font-size:12.5px;color:var(--textM);line-height:1.55;margin:13px 0 17px}
+.price-feat{flex:1;display:flex;flex-direction:column;gap:9px;margin-bottom:18px}
+.pf-row{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.45;color:var(--text)}
+.pf-row.no{color:var(--textQ)}
+.pf-yes{color:var(--green);flex-shrink:0;font-weight:700}
+.pf-no{color:var(--textQ);flex-shrink:0}
+.price-cta{width:100%;justify-content:center}
+
+@media(max-width:1100px){.xm-grid{grid-template-columns:1fr}}
+@media(max-width:760px){.pricing-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -533,6 +596,7 @@ button{font-family:inherit}
       <div class="nav-item" id="nav-archive" onclick="go('archive')"><span class="nav-icon">🗄</span> Archive &amp; Audit</div>
       <div class="nav-item" id="nav-bench" onclick="go('bench')"><span class="nav-icon">◷</span> Benchmarking <span class="nav-soon">PHASE 4</span></div>
       <div class="nav-item" id="nav-settings" onclick="go('settings')"><span class="nav-icon">⚙</span> Settings</div>
+      <div class="nav-item" id="nav-pricing" onclick="go('pricing')"><span class="nav-icon">$</span> Pricing &amp; plans</div>
     </nav>
     <div class="sb-user" onclick="go('settings')">
       <div class="sb-avatar">MC</div>
@@ -607,7 +671,7 @@ button{font-family:inherit}
             </div>
 
             <div class="section-head mt">Past tasks <span class="s-count">1</span></div>
-            <div class="task-card" onclick="go('cross')">
+            <div class="task-card" onclick="openTaskDetail()">
               <div class="tc-top">
                 <div>
                   <div class="tc-name">Unit 1 SAC — Business Foundations</div>
@@ -690,7 +754,7 @@ button{font-family:inherit}
               <td class="small td-mut">0 / 18 marked</td>
               <td><span class="badge badge-grey">Not started</span></td>
             </tr>
-            <tr class="clickable" onclick="go('cross')">
+            <tr class="clickable" onclick="openTaskDetail()">
               <td class="td-name">Unit 1 SAC — Business Foundations</td>
               <td class="muted small">BM · Unit 1&amp;2</td>
               <td class="small">Class A + B</td>
@@ -717,7 +781,7 @@ button{font-family:inherit}
               <td class="small td-mut">Not yet open</td>
               <td><span class="badge badge-grey">Scheduled</span></td>
             </tr>
-            <tr class="clickable" onclick="go('cross')">
+            <tr class="clickable" onclick="openTaskDetail()">
               <td class="td-name">Unit 2 SAC — Marketing &amp; Public Relations</td>
               <td class="muted small">BM · Unit 1&amp;2</td>
               <td class="small">Class B</td>
@@ -732,6 +796,7 @@ button{font-family:inherit}
 
       <!-- ═══════════════ TASK DETAIL / ROSTER ═══════════════ -->
       <div id="page-taskdetail" class="page">
+        <div class="subnav"><a class="subnav-back" onclick="go('tasks')">← All tasks</a></div>
         <div class="page-head-row">
           <div>
             <div class="page-title">SAC 1 — Operations Management</div>
@@ -828,6 +893,7 @@ button{font-family:inherit}
 
       <!-- ═══════════════ MARKING ═══════════════ -->
       <div id="page-marking" class="page page-flush">
+        <div class="subnav"><a class="subnav-back" onclick="go('taskdetail')">← Back to SAC 1 — Operations</a></div>
         <div class="marking-layout">
 
           <!-- Paper viewer with FULL SAC submission -->
@@ -904,16 +970,18 @@ button{font-family:inherit}
               <div class="status-pills"><span class="badge badge-amber"><span class="badge-dot"></span>To mark</span><span class="badge badge-grey">Not moderated</span></div>
             </div>
 
-            <!-- Suggest marks AI panel -->
-            <div class="ai-panel">
+            <!-- AI Marking Assistant panel -->
+            <div class="ai-panel" id="ai-panel">
               <div class="ai-head" onclick="toggleAI()">
                 <div class="ai-icon">✦</div>
-                <div><div class="ai-title">Suggest marks &amp; feedback</div></div>
-                <span class="ai-tag">Advisory</span>
-                <div class="ai-toggle"><span id="ai-state-label">On</span><div class="ai-switch" id="ai-switch" onclick="event.stopPropagation();toggleAI()"></div></div>
+                <div class="ai-head-text">
+                  <div class="ai-title">AI Marking Assistant</div>
+                  <div class="ai-subtitle">Suggested marks &amp; feedback · advisory only</div>
+                </div>
+                <button class="ai-hide-btn" id="ai-hide-btn" onclick="event.stopPropagation();toggleAI()">Hide ▴</button>
               </div>
               <div class="ai-body" id="ai-body">
-                <div class="ai-disclaimer"><span>ℹ</span><span>These are suggestions only. Moderato never fills in marks for you — you remain the assessor of record. Insights are aligned to the VCE Study Design outcomes. Disable any time.</span></div>
+                <div class="ai-disclaimer"><span>ℹ</span><span>Suggestions only — Moderato never fills in marks for you. You stay the assessor of record. Aligned to the VCE Study Design outcomes; toggle off any time.</span></div>
                 <div class="ai-q-block">
                   <div class="ai-q-row"><span class="ai-q-label">Q1 · Define + relationship</span><span class="ai-q-range">3 – 4 / 4</span></div>
                   <div class="ai-q-note">Clear definition with inputs/transformation/outputs. Links to objectives (profit, market share) with an example. Fully addresses both parts of the prompt.</div>
@@ -933,6 +1001,7 @@ button{font-family:inherit}
               </div>
             </div>
 
+            <!-- Per-question scoring -->
             <!-- Per-question scoring -->
             <div class="panel-card">
               <div class="panel-title">Your marks <span style="margin-left:auto;font-weight:400;text-transform:none;letter-spacing:0;color:var(--textQ)">you enter these</span></div>
@@ -975,7 +1044,7 @@ button{font-family:inherit}
       <!-- ═══════════════ CROSS-MARKING HUB ═══════════════ -->
       <div id="page-cross" class="page">
         <div class="page-title">Cross-marking</div>
-        <div class="page-sub">Structured peer moderation — explicit standards, student-work evidence, and consensus between markers. This is where comparable judgement data accrues.</div>
+        <div class="page-sub">Structured peer moderation — explicit standards, student-work evidence, consensus between markers. This is where the comparable judgement data behind benchmarking accrues.</div>
 
         <div class="agree-summary">
           <div class="agree-stat"><div class="agree-stat-n" style="color:var(--green)">91%</div><div class="agree-stat-l">Avg marker agreement this term</div></div>
@@ -983,54 +1052,76 @@ button{font-family:inherit}
           <div class="agree-stat"><div class="agree-stat-n" style="color:var(--navy)">0.7</div><div class="agree-stat-l">Mean mark discrepancy</div></div>
         </div>
 
-        <div class="section-head">Needs your attention <span class="s-count">2</span></div>
+        <div class="xm-grid">
+          <div>
+            <div class="section-head">Your action queue <span class="s-count">2</span></div>
+            <div class="xm-card">
+              <div class="xm-row">
+                <div class="xm-ico green">↩</div>
+                <div class="xm-body">
+                  <div class="xm-title">Unit 1 SAC — Business Foundations</div>
+                  <div class="xm-meta">Sarah Vukovic returned your request · 2 hrs ago</div>
+                  <div class="xm-chips"><span class="xm-chip ok">89% agreement</span><span class="xm-chip warn">2 questions flagged</span></div>
+                </div>
+                <div class="xm-act"><button class="btn btn-primary btn-sm" onclick="openModerationResults()">Review →</button></div>
+              </div>
+              <div class="xm-row">
+                <div class="xm-ico amber">⇌</div>
+                <div class="xm-body">
+                  <div class="xm-title">Blind cross-mark request — David Okafor</div>
+                  <div class="xm-meta">Eastgate College · 4 papers · Unit 3 SAC</div>
+                  <div class="xm-chips"><span class="xm-chip">No sign-up needed</span><span class="xm-chip">Pseudonymised</span></div>
+                </div>
+                <div class="xm-act"><button class="btn btn-secondary btn-sm" onclick="openColleague()">Open →</button></div>
+              </div>
+            </div>
 
-        <div class="task-card" style="border-left:3px solid var(--green);border-radius:0 var(--rL) var(--rL) 0" onclick="openModerationResults()">
-          <div class="tc-top">
-            <div><div class="tc-name">Unit 1 SAC — Business Foundations <span class="badge badge-green" style="margin-left:8px">↩ Returned</span></div>
-            <div class="tc-sub">Sarah Vukovic returned your cross-marking request · 2 hrs ago</div></div>
-            <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openModerationResults()">Review comparison →</button>
+            <div class="section-head mt">In progress <span class="s-count">1</span></div>
+            <div class="xm-card">
+              <div class="xm-row">
+                <div class="xm-ico blue">◴</div>
+                <div class="xm-body">
+                  <div class="xm-title">Unit 2 SAC — Marketing &amp; Public Relations</div>
+                  <div class="xm-meta">Sent to Jordan Tran · awaiting return · 2 days ago</div>
+                  <div class="xm-progress-inline"><div class="xm-progress-bar" style="width:40%"></div></div>
+                </div>
+                <div class="xm-act"><button class="btn btn-ghost btn-sm" onclick="toast('Reminder sent to Jordan Tran')">Remind</button></div>
+              </div>
+            </div>
           </div>
-          <div style="background:var(--greenL);border-radius:8px;padding:10px 13px;margin-top:10px;font-size:12.5px;color:var(--green)"><b>89% agreement</b> <span style="color:var(--textM)">· mean discrepancy 0.8 marks · </span><span style="color:var(--red);font-weight:600">2 questions flagged for reconciliation</span></div>
-        </div>
 
-        <div class="task-card" style="border-left:3px solid var(--amber);border-radius:0 var(--rL) var(--rL) 0" onclick="openColleague()">
-          <div class="tc-top">
-            <div><div class="tc-name">Incoming request from David Okafor <span class="badge badge-amber" style="margin-left:8px">Action needed</span></div>
-            <div class="tc-sub">David (Eastgate College) asked you to blind cross-mark 4 papers · Unit 3 SAC</div></div>
-            <button class="btn btn-secondary btn-sm" onclick="event.stopPropagation();openColleague()">Open colleague view →</button>
-          </div>
-          <div class="small muted mt8">↗ This is how the no-sign-up moderation link works — opens the pseudonymised paper view a colleague sees.</div>
-        </div>
+          <div>
+            <div class="section-head">Start a new round</div>
+            <div class="xm-card">
+              <div class="xm-row compact">
+                <div class="xm-body"><div class="xm-title">SAC 1 — Operations Management</div><div class="xm-meta">1 of 5 marked</div></div>
+                <div class="xm-act"><button class="btn btn-primary btn-sm" onclick="openModeration()">⇌ Send</button></div>
+              </div>
+              <div class="xm-row compact">
+                <div class="xm-body"><div class="xm-title">Unit 2 SAC — Marketing &amp; PR</div><div class="xm-meta">22 of 22 marked</div></div>
+                <div class="xm-act"><button class="btn btn-secondary btn-sm" onclick="openModeration()">⇌ Send</button></div>
+              </div>
+              <div class="xm-row compact">
+                <div class="xm-body"><div class="xm-title">Unit 1 SAC — Business Foundations</div><div class="xm-meta">36 of 36 · moderated</div></div>
+                <div class="xm-act"><button class="btn btn-secondary btn-sm" onclick="openModeration()">⇌ Send</button></div>
+              </div>
+            </div>
 
-        <div class="section-head mt">Start a new moderation round</div>
-        <div class="task-card" onclick="openModeration()">
-          <div class="tc-top">
-            <div><div class="tc-name">SAC 1 — Operations Management</div><div class="tc-sub">1 of 5 marked · select papers and send to a colleague</div></div>
-            <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openModeration()">⇌ Send for moderation</button>
-          </div>
-        </div>
-        <div class="task-card" onclick="openModeration()">
-          <div class="tc-top">
-            <div><div class="tc-name">Unit 2 SAC — Marketing &amp; Public Relations</div><div class="tc-sub">22 of 22 marked · ready for a full moderation round</div></div>
-            <button class="btn btn-secondary btn-sm" onclick="event.stopPropagation();openModeration()">⇌ Send for moderation</button>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top:22px;background:var(--blueXL);border-color:var(--blueM)">
-          <div style="font-size:13.5px;font-weight:700;color:var(--navy);margin-bottom:12px">How cross-marking works</div>
-          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px">
-            <div><div style="width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:8px">1</div><div style="font-size:12px;color:var(--textM);line-height:1.5">Pick a task and select papers to moderate.</div></div>
-            <div><div style="width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:8px">2</div><div style="font-size:12px;color:var(--textM);line-height:1.5">Choose blind cross-marking or please-moderate.</div></div>
-            <div><div style="width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:8px">3</div><div style="font-size:12px;color:var(--textM);line-height:1.5">Colleague gets a secure link — <b>no sign-up.</b></div></div>
-            <div><div style="width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:8px">4</div><div style="font-size:12px;color:var(--textM);line-height:1.5">Marks return side-by-side; discrepancies auto-flagged.</div></div>
-            <div><div style="width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:8px">5</div><div style="font-size:12px;color:var(--textM);line-height:1.5">Reconcile to agreed finals; full audit trail saved.</div></div>
+            <div class="xm-how">
+              <div class="xm-how-title">How it works</div>
+              <div class="xm-step"><span class="xm-step-n">1</span><span>Pick a task &amp; select papers to moderate.</span></div>
+              <div class="xm-step"><span class="xm-step-n">2</span><span>Choose blind cross-marking or please-moderate.</span></div>
+              <div class="xm-step"><span class="xm-step-n">3</span><span>Colleague gets a secure link — <b>no sign-up.</b></span></div>
+              <div class="xm-step"><span class="xm-step-n">4</span><span>Marks return side-by-side; discrepancies auto-flagged.</span></div>
+              <div class="xm-step"><span class="xm-step-n">5</span><span>Reconcile to agreed finals; full audit trail saved.</span></div>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- ═══════════════ MODERATION RESULTS (OWNER VIEW) ═══════════════ -->
       <div id="page-modresults" class="page">
+        <div class="subnav"><a class="subnav-back" onclick="go('cross')">← Back to Cross-marking</a></div>
         <div class="page-head-row">
           <div>
             <div class="page-title">Moderation comparison — Unit 1 SAC</div>
@@ -1211,7 +1302,7 @@ button{font-family:inherit}
           </div>
           <div>
             <div class="ai-panel" style="margin-bottom:16px">
-              <div class="ai-head"><div class="ai-icon">✦</div><div class="ai-title">Suggest marks &amp; feedback</div><div class="ai-toggle"><span>Enabled</span><div class="ai-switch"></div></div></div>
+              <div class="ai-head"><div class="ai-icon">✦</div><div class="ai-title">AI Marking Assistant</div><div class="ai-toggle"><span>Enabled</span><div class="ai-switch"></div></div></div>
               <div class="ai-body"><div class="small muted" style="line-height:1.7">The advisory AI is <b>disable-able school-wide</b>. The core marking + moderation flow works fully without it. Every suggestion is logged (model + version) and feeds the optional AI-assistance disclosure on exports.</div></div>
             </div>
             <div class="panel-card">
@@ -1289,6 +1380,60 @@ button{font-family:inherit}
             <div class="trust-item"><span style="color:var(--green)">✓</span><span><b>Directional, not deterministic.</b> Every figure states its uncertainty; nothing claims to predict an individual student's ATAR.</span></div>
           </div>
         </div>
+      </div>
+
+
+      <!-- ═══════════════ PRICING ═══════════════ -->
+      <div id="page-pricing" class="page">
+        <div class="page-title">Pricing &amp; plans</div>
+        <div class="page-sub">Simple plans for individual teachers and whole schools.</div>
+
+        <div style="background:var(--greenL);border:1px solid var(--greenM);border-radius:var(--rL);padding:13px 17px;margin-bottom:22px;font-size:13px;color:var(--green);display:flex;gap:11px;align-items:center">
+          <span style="font-size:16px">🎉</span>
+          <span><b>Moderato is completely free during our pilot program.</b> <span style="color:var(--textM)">The plans below are our planned model for general launch — pilot schools and early teachers help shape it.</span></span>
+        </div>
+
+        <div class="pricing-grid">
+          <div class="price-card featured">
+            <span class="price-flag">For individual teachers</span>
+            <div class="price-kicker">Teacher</div>
+            <div class="price-name">Individual</div>
+            <div class="price-tag"><span class="price-amt">$30</span><span class="price-per">/ month</span></div>
+            <div class="price-alt"><span class="strike">$360/yr</span>or $216/year — save 40%</div>
+            <div class="price-desc">Full marking &amp; moderation for your own classes. Get sorted now, without waiting for your school to buy in.</div>
+            <div class="price-feat">
+              <div class="pf-row"><span class="pf-yes">✓</span><span>Up to <b>2 active tasks</b> at a time</span></div>
+              <div class="pf-row"><span class="pf-yes">✓</span><span>Up to <b>2 classes</b> (max 30 students each)</span></div>
+              <div class="pf-row"><span class="pf-yes">✓</span><span>Per-question marking with live totals &amp; percentages</span></div>
+              <div class="pf-row"><span class="pf-yes">✓</span><span>Cross-marking &amp; moderation — colleagues never need an account</span></div>
+              <div class="pf-row"><span class="pf-yes">✓</span><span><b>AI Marking Assistant</b> (advisory suggestions)</span></div>
+              <div class="pf-row"><span class="pf-yes">✓</span><span>One-click finalised-paper export</span></div>
+              <div class="pf-row no"><span class="pf-no">✕</span><span>Auto Task Builder</span></div>
+              <div class="pf-row no"><span class="pf-no">✕</span><span>School Archive &amp; Audit · Inter-school Benchmarking</span></div>
+            </div>
+            <button class="btn cta-access price-cta" style="box-shadow:none" onclick="openAccess()">Start free during pilot</button>
+          </div>
+
+          <div class="price-card">
+            <div class="price-kicker">School</div>
+            <div class="price-name">School &amp; Department</div>
+            <div class="price-custom">Tailored</div>
+            <div class="price-alt" style="color:var(--textM);font-weight:500">from ~$2,000/yr department · ~$8–15k/yr whole-school</div>
+            <div class="price-desc">The full platform — leadership oversight, audit-readiness, and (at network density) inter-school benchmarking.</div>
+            <div class="price-feat">
+              <div class="pf-row"><span class="pf-yes">✓</span><span><b>Everything in Individual</b>, plus:</span></div>
+              <div class="pf-row"><span class="pf-yes">✓</span><span>Unlimited tasks, classes &amp; teachers</span></div>
+              <div class="pf-row"><span class="pf-yes">✓</span><span><b>Auto Task Builder</b> — corpus-grounded task + rubric generation</span></div>
+              <div class="pf-row"><span class="pf-yes">✓</span><span><b>School Archive &amp; Audit</b> + one-click VCAA audit pack</span></div>
+              <div class="pf-row"><span class="pf-yes">✓</span><span>Leadership dashboard &amp; coordinator-led moderation rounds</span></div>
+              <div class="pf-row"><span class="pf-yes">✓</span><span><b>Inter-school Benchmarking</b> (at network density)</span></div>
+              <div class="pf-row"><span class="pf-yes">✓</span><span>Priority onboarding &amp; support</span></div>
+            </div>
+            <button class="btn btn-secondary price-cta" onclick="openAccess()">Talk to us about a pilot</button>
+          </div>
+        </div>
+
+        <div class="small muted mt20" style="max-width:900px;line-height:1.6">All prices in AUD. Cross-marking always works with any colleague at no cost to them — they open a secure link, mark, and they're done. The Individual plan is sized for a single teacher's core load; departments and schools that need more move to the school plan.</div>
       </div>
 
     </div><!-- /pages -->
@@ -1584,7 +1729,7 @@ var WEB3FORMS_ACCESS_KEY = "c452d3d7-e34e-4185-99f7-4840f12372c8";
 var CONTACT_EMAIL = "marcus@fisalprojects.com";
 
 /* ──────── Page navigation ──────── */
-var navMap = {home:'nav-home',tasks:'nav-tasks',taskdetail:'nav-tasks',marking:'nav-tasks',cross:'nav-cross',modresults:'nav-cross',builder:'nav-builder',bench:'nav-bench',archive:'nav-archive',settings:'nav-settings'};
+var navMap = {home:'nav-home',tasks:'nav-tasks',taskdetail:'nav-tasks',marking:'nav-tasks',cross:'nav-cross',modresults:'nav-cross',builder:'nav-builder',bench:'nav-bench',archive:'nav-archive',settings:'nav-settings',pricing:'nav-pricing'};
 var crumbs = {
   home:'<span class="cur">Home</span>',
   tasks:'<a onclick="go(\'home\')">Home</a><span class="sep">/</span><span class="cur">Tasks</span>',
@@ -1595,7 +1740,8 @@ var crumbs = {
   builder:'<a onclick="go(\'home\')">Home</a><span class="sep">/</span><span class="cur">Auto Task Builder</span>',
   bench:'<a onclick="go(\'home\')">Home</a><span class="sep">/</span><span class="cur">Benchmarking</span>',
   archive:'<a onclick="go(\'home\')">Home</a><span class="sep">/</span><span class="cur">School Archive &amp; Audit</span>',
-  settings:'<a onclick="go(\'home\')">Home</a><span class="sep">/</span><span class="cur">Settings</span>'
+  settings:'<a onclick="go(\'home\')">Home</a><span class="sep">/</span><span class="cur">Settings</span>',
+  pricing:'<a onclick="go(\'home\')">Home</a><span class="sep">/</span><span class="cur">Pricing &amp; plans</span>'
 };
 var currentView='home';
 function go(view){
@@ -1645,9 +1791,9 @@ function completeMarking(){
 var aiOn=true;
 function toggleAI(){
   aiOn=!aiOn;
-  document.getElementById('ai-switch').classList.toggle('off',!aiOn);
-  document.getElementById('ai-state-label').textContent=aiOn?'On':'Off';
   document.getElementById('ai-body').style.display=aiOn?'block':'none';
+  var b=document.getElementById('ai-hide-btn');
+  if(b)b.innerHTML=aiOn?'Hide ▴':'Show ▾';
 }
 
 /* ──────── Colleague (blind cross-marking) view ──────── */
@@ -1797,7 +1943,8 @@ var tipContent={
   builder:["AUTO TASK BUILDER","Generate a full task + rubric (or just a rubric) grounded in the real VCE Study Design. Output is unique every time — never a static bank — and exports to PDF or Word."],
   bench:["BENCHMARKING — THE MOAT","Your Phase-4 payoff: a directional, uncertainty-stated read on how your marking compares to the network standard, before statistical moderation. Built on anchor items + cross-mark data, never league tables."],
   archive:["SCHOOL ARCHIVE & AUDIT","The leadership view — a durable, school-wide record of every assessment, mark and moderation round, with a one-click VCAA audit pack. This is what justifies the school site-licence."],
-  settings:["CONFIGURATION","Switch roles (Teacher / Coordinator / School Admin) to see how access changes. The advisory AI is disable-able school-wide, and all data is Australian-hosted in Sydney."]
+  settings:["CONFIGURATION","Switch roles (Teacher / Coordinator / School Admin) to see how access changes. The advisory AI is disable-able school-wide, and all data is Australian-hosted in Sydney."],
+  pricing:["PRICING & PLANS","Two plans: an Individual teacher subscription (up to 2 tasks/classes, AI Assistant included, Auto Builder locked) and tailored School/Department contracts. Free for everyone during the pilot."]
 };
 function showTipFor(view){
   if(!tipsEnabled)return;
